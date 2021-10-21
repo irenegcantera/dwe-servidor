@@ -1,37 +1,47 @@
 <?php
 if(isset($_REQUEST['datosnt'])){
     eval('$ntArray='.$_REQUEST['datosnt'].';');
-    $nombre = ucwords(strtolower($_REQUEST['nombre']));
+    // el nombre se pasa a minúsculas y la primera letra de cada palabra a mayúsculas
+    $nombre = ucwords(strtolower($_REQUEST['nombre'])); 
     $telefono = $_REQUEST['telefono'];
-    if($nombre == null && $telefono == null){
-        echo "<h4>NO SE HA INTRODUCIDO EL NOMBRE O EL TELÉFONO</h4>";
+    if($nombre == null){
+        echo "<h4>NO SE HA INTRODUCIDO EL NOMBRE</h4>";
     }else{
+        // si el array está vacío y el teléfono tiene una longitud de 9 introducimos el registro 
         if(count($ntArray) == 0){
-            $ntArray = [$nombre => $telefono]; 
+            if((strlen($telefono) == 9)){
+                $ntArray = [$nombre => $telefono]; 
+            }else{
+                echo "<h4>NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE</h4>";
+            }
         }else{
             foreach($ntArray as $n => $t){
                 if($nombre == $n){
+                    // si el télefono no está vacío y tiene una longitud de 9
                     if(($telefono != null) && (strlen($telefono) == 9)){
-                        $ntArray[$n] = $telefono;
+                        $ntArray[$n] = $telefono; // modificar teléfono si el nombre ya existe
                     }else{
-                        unset($ntArray[$n]);
+                        echo "<h4>NO SE HA INTRODUCIDO EL TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE</h4>";
+                        echo "Se va a eliminar el contacto";
+                        // si está vacío eliminar el registro
+                        unset($ntArray[$n]); 
                     }
                 }else{
+                    // si no existe el nombre y se registro un teléfono de longitud 9
                     if(($telefono != null) && (strlen($telefono) == 9)){
-                            $ntArray[$nombre] = $telefono;
+                            $ntArray[$nombre] = $telefono; // se añade la clave nombre y el valor teléfono
+                    }else{
+                        echo "<h4>NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE</h4>";
                     }
                 }
             }
         }
     }
 }else{
-    if (isset($_REQUEST['enviar'])){
-        echo "NO SE HA INTRODUCIDO NADA.";
-    }else{
-        $ntArray = array();
-    }
+    $ntArray = array();
 }
-echo "<h1>Nombres</h1>";
+// mostrar la tabla por pantalla
+echo "<h1>Agenda telefónica</h1>";
 echo "<table border>";
 echo "<tr><th>Nombre</th><th>Teléfono</th></tr>";
 foreach ($ntArray as $n => $t) {

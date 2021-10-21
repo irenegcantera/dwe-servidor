@@ -2,42 +2,51 @@
 if(isset($_REQUEST['datosn']) && isset($_REQUEST['datost'])){
     $nombreArray = explode(";", $_REQUEST['datosn']);
     $telfArray = explode(";", $_REQUEST['datost']);
+    // el nombre se pasa a minúsculas y la primera letra de cada palabra a mayúsculas
     $nombre = ucwords(strtolower($_REQUEST['nombre']));
     $telefono = $_REQUEST['telefono'];
-    if($nombre == null && $telefono == null){
-        echo "<h4>NO SE HA INTRODUCIDO EL NOMBRE O EL TELÉFONO</h4>";
+    if($nombre == null){
+        echo "<h4>NO SE HA INTRODUCIDO EL NOMBRE</h4>";
     }else{
+        // si el nombre introducido existe en el array 
         if(in_array($nombre, $nombreArray)){
-            $indice = array_search($nombre, $nombreArray);
-            if(($telefono != null) && (strlen($telefono) == 9)){
-                $telfArray[$indice] = $telefono;
+            $indice = array_search($nombre, $nombreArray); // obtener la posición del nombre en el array
+            // si el télefono no está vacío y tiene una longitud de 9
+            if(($telefono != null) && (strlen($telefono) == 9)){ 
+                $telfArray[$indice] = $telefono; // modificar el teléfono
             }else{
+                echo "<h4>NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE</h4>";
+                echo "Se va a eliminar el contacto";
+                // si está vacío eliminar el registro de cada array
                 unset($nombreArray[$indice]);
                 unset($telfArray[$indice]);
             }
         }else{
+            // si no existe el nombre y se registro un teléfono de longitud 9
             if(($telefono != null) && (strlen($telefono) == 9)){
+                // se añade los valores de nombre y teléfono a sus respectivos array
                 array_push($nombreArray, $nombre);
                 array_push($telfArray, $telefono);
+            }else{
+                echo "<h4>NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE</h4>";
             }
         }
     }
 }else{
-    if (isset($_REQUEST['enviar'])){
-        echo "NO SE HA INTRODUCIDO NADA.";
-    }else{
-        $nombreArray = array();
-        $telfArray = array(); 
-    }
+    $nombreArray = array();
+    $telfArray = array();
 }
-
-echo "<h1>Nombres</h1>";
+// mostrar la tabla por pantalla
+echo "<h1>Agenda telefónica</h1>";
 echo "<table border>";
 echo "<tr><th>Nombre</th><th>Teléfono</th></tr>";
-for($i = 0; $i < count($nombreArray); $i++){
-    echo "<tr><td>$nombreArray[$i]</td><td>$telfArray[$i]</td></tr>"; 
+foreach ($nombreArray as $i => $n) {
+    echo "<tr><td>$nombreArray[$i]</td>"; 
+    echo "<td>$telfArray[$i]</td></tr>";;
 }
 echo "<table>"; 
+
+
 ?>
 
 <html>

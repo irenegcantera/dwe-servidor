@@ -2,7 +2,7 @@
 
 ## Calendar
 
-In progress...
+En este calendario se puede añadir una serie de tareas o citas en cada día del mes, así como leer las tareas y eliminarlas.
 
 ### Commits
 

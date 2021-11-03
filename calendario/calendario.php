@@ -33,15 +33,20 @@
         if(isset($_GET['tareas'])){
             $texto = $_GET['tareas'];
             $nombreFichero = $year.$mes.$dia.".txt";
-            if(file_exists($nombreFichero)){
-                $tareas = guardaArchivo($dia,$mes,$year, $texto);
-            } // Falta lo que pasaría si no existe el fichero
-        }else{
-            borraArchivo($dia,$mes,$year);
+            $tareas = guardaArchivo($dia,$mes,$year, $texto);
+            // Obtenemos la longitud del texto de $tareas para que no se imprima el valor en el textarea una vez enviado las tareas
+            // Si la longitud es cero al darle a enviar se borrará el archivo
+            $longitud = strlen($tareas);
+            if ($tareas == settype($longitud, 'string')){
+                $tareas = null;
+            }else if ($tareas == "0"){
+                borraArchivo($dia,$mes,$year);
+                $tareas = null;
+            }
         }
     }else{
         $tareas = leeArchivo($dia,$mes,$year);
-        // Si las tareas es igual a 0, no se mostrará nada
+        // Si $tareas es de longitud igual a 0, no se mostrará nada
         if($tareas == "0"){
             $tareas = null;
         }

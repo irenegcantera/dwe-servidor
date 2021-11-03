@@ -1,31 +1,32 @@
-
 <!-- DOCUMENTO QUE ALMACENA TODAS LAS FUNCIONES -->
 <?php
 
-// función que crea una tabla que contendrá los días del mes
+/* Función que crea una tabla que contendrá los días de cada mes y año */
 function crearTablaMes($dia,$mes,$year){
-	$diaInicio = jddayofweek(cal_to_jd(CAL_GREGORIAN, $mes, 1, $year));
+    // Día de la semana en número, si es 0 pasa a ser 7
+	$diaInicio = jddayofweek(cal_to_jd(CAL_GREGORIAN, $mes, 1, $year)); 
     $diaInicio = ($diaInicio == 0) ? 7 : $diaInicio;
 
+    // Número de días que tiene un mes
     $diasMes = cal_days_in_month(CAL_GREGORIAN, $mes, $year);
 
+    // Variables que guarda el mes y año restado o sumado. Si el mes es 12 o 1, se resta o suma, respectivamente.
     $mesRestado = restarMes($mes);
     $mesSumado = sumarMes($mes);
-    $yearRestado = $year;
-    $yearSumado = $year;
-
+    $yearAhora = $year;
+ 
     if($mesRestado == 12){
-        $yearRestado--;
-    }
-    if($mesSumado == 1){
-        $yearSumado++;
+        $yearAhora--;
+    }else if($mesSumado == 1){
+        $yearAhora++;
     }
 
+    // Mostramos la tabla por pantalla
     echo "<table>";
         echo "<caption>";
-            echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mesRestado."&dia=".$dia."&year=".$yearRestado."> << </a>";
+            echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mesRestado."&dia=".$dia."&year=".$yearAhora."> << </a>";
             echo "&nbsp;&nbsp;".pintarMesYear($mes,$year)."&nbsp;&nbsp;";
-            echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mesSumado."&dia=".$dia."&year=".$yearSumado."> >> </a>";
+            echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mesSumado."&dia=".$dia."&year=".$yearAhora."> >> </a>";
         echo "</caption>";
         echo "<tr>";
             echo "<th>Lunes</th>";
@@ -37,13 +38,14 @@ function crearTablaMes($dia,$mes,$year){
             echo "<th>Domingo</th>";
 		echo "</tr>";
 		
+        // Aquí comienza a pintarse los números en la celda
         $d = 1;
         $empezado = false;
 
         while($d <= $diasMes){
             echo "<tr>";           
             for($j = 1; $j < 8; $j++){ // número columnas
-                // si no hemos empezado a pintar y estamos en el día de la semana que 
+                // Si no hemos empezado a pintar y estamos en el día de la semana que 
                 // coincide con el 1 del mes, se activa $empezado
                 if((!$empezado) && ($j == $diaInicio)){
                     $empezado = true;
@@ -62,13 +64,13 @@ function crearTablaMes($dia,$mes,$year){
     echo "</table>";
 }
 
-// función que devuelve el mes actual y año actual
+/* Función que devuelve el mes actual y año actual */
 function pintarMesYear($mes,$year){
     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     return $meses[$mes-1]." ".date($year);
 }
 
-// función que calcula el mes siguiente y el mes anterior
+/* Función que calcula el mes anterior */
 function restarMes($mes){
     if($mes == 1){
         return 12;
@@ -77,6 +79,7 @@ function restarMes($mes){
     }
 }
 
+/* Función que calcula el mes siguiente */
 function sumarMes($mes){
     if($mes ==12){
         return 1;
@@ -85,30 +88,28 @@ function sumarMes($mes){
     }
 }
 
-// función que lee datos de un archivo
+/* Función que lee un fichero de un día, mes y año concreto */
 function leeArchivo($dia,$mes,$year){
-    $nombreFichero = $year.$mes.$dia.".txt";
-    if(file_exists($nombreFichero)){
-        return file_get_contents($nombreFichero); 
+    $rutaFichero = "./files/".$year.$mes.$dia.".txt";
+    // Comprobar si existe o no el fichero
+    if(file_exists($rutaFichero)){
+        return file_get_contents($rutaFichero); 
     }else{
-        return file_put_contents($nombreFichero,"");
+        return file_put_contents($rutaFichero,"");
     }
 }
 
-// función que guarde los datos en un archivo
+/* Función que guarda en un fichero el texto de un día, mes y año concreto */
 function guardaArchivo($dia,$mes,$year,$texto){
-    $nombreFichero = $year.$mes.$dia.".txt";
-    if($texto == "0"){
-        $texto = "";
-    }
-    return file_put_contents($nombreFichero,$texto); // crea el fichero
+    $rutaFichero = "./files/".$year.$mes.$dia.".txt";
+    return file_put_contents($rutaFichero,$texto); // también crea el fichero
 }
 
-// función que borra el fichero si no se ha introducido datos en el formulario.
+/* Función que borra un fichero de un día, mes y año concreto si existe*/
 function borraArchivo($dia,$mes,$year){
-    $nombreFichero = $year.$mes.$dia.".txt";
-    if(file_exists($nombreFichero)){
-        unlink($nombreFichero);
+    $rutaFichero = "./files/".$year.$mes.$dia.".txt";
+    if(file_exists($rutaFichero)){
+        unlink($rutaFichero);
     }
 }
 ?>

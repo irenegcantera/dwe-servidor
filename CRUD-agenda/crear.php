@@ -13,6 +13,9 @@
                     $foto = null;
                     // echo "Ha dado error";
                 }
+            }else{
+                $foto = null;
+                // echo "No se ha introducido foto";
             }
 
             // Comprobaciones
@@ -22,20 +25,28 @@
                     addContactos($nombre,$telf,$foto);
                 }else{
                     // Recorremos el array y comprobamos que el nombre introducido no está ya en el fichero
-                    // Contador que cuenta las veces que aparece el nombre
+                    // Contadores que cuentan las veces que aparece el nombre y el teléfono
                     $numNombres = 0; 
+                    $numTelefonos = 0;
                     foreach ($datos as $key => $value) {
                         foreach($value as $v){
                             if ($nombre == $v){
                                 $numNombres++;
                             }
+                            if ($telf == $v){
+                                $numTelefonos++;
+                            }
                         }
                     }
-                    // Si no ha aparecido, añadimos el contacto al fichero
-                    if ($numNombres == 0){
+                    // Si no ha aparecido el nombre ni el teléfono, añadimos el contacto al fichero
+                    if (($numNombres == 0) && ($numTelefonos == 0)) {
                         addContactos($nombre,$telf,$foto);
+                    }else{
+                        // echo "Se repite el nombre o el teléfono";
                     }
                 }
+            }else{
+                // echo "Se debe subir una foto";
             }
         }else{
             // echo "Hay que rellenar todos los campos.";

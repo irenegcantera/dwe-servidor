@@ -4,17 +4,39 @@
 
     if(isset($_REQUEST['submit'])){
         if(isset($_REQUEST['nombre']) && isset($_REQUEST['telefono'])){
-            $nombre = $_REQUEST['nombre'];
+            $nombre = ucwords(strtolower($_REQUEST['nombre'])); // primera lettra en mayúsculas y el resto en minúscula
             $telf = $_REQUEST['telefono'];
             if(isset($_REQUEST['guardar'])){
                 if(isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK){
                     $foto = $_FILES['foto'];
                 }else{
-                    $foto = 'none';
+                    $foto = null;
+                    // echo "Ha dado error";
                 }
             }
-            
-            // comprobaciones
+
+            // Comprobaciones
+            $datos = getContactos();
+            if ($foto != null){
+                if (count($datos) == 0){
+                    addContactos($nombre,$telf,$foto);
+                }else{
+                    // Recorremos el array y comprobamos que el nombre introducido no está ya en el fichero
+                    // Contador que cuenta las veces que aparece el nombre
+                    $numNombres = 0; 
+                    foreach ($datos as $key => $value) {
+                        foreach($value as $v){
+                            if ($nombre == $v){
+                                $numNombres++;
+                            }
+                        }
+                    }
+                    // Si no ha aparecido, añadimos el contacto al fichero
+                    if ($numNombres == 0){
+                        addContactos($nombre,$telf,$foto);
+                    }
+                }
+            }
         }else{
             // echo "Hay que rellenar todos los campos.";
         }

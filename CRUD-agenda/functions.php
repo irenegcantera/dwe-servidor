@@ -22,7 +22,7 @@ function addContactos($nombre,$telf,$foto) {
 
 
 /* Función que lee el fichero y recupera la información guardandola en un array */
-function leeArchivo(){
+function getContactos(){
     $rutaFichero = "./files/contactos.txt";
     $fichero = file_get_contents($rutaFichero);  // obtener todo el contenido
     $linea_datos = explode("\n",$fichero); // guardar el contenido separado por un salto de línea en un array 

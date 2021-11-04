@@ -41,17 +41,6 @@ function getContactos(){
     return $datos;
 }
 
-/* Función que guarda en un fichero el texto de un día, mes y año concreto */
-// function guardaArchivo($dia,$mes,$year,$texto){
-//     $rutaFichero = "./files/".$year.$mes.$dia.".txt";
-//     return file_put_contents($rutaFichero,$texto); // también crea el fichero
-// }
-
-/* Función que borra un fichero de un día, mes y año concreto si existe*/
-// function borraArchivo($dia,$mes,$year){
-//     $rutaFichero = "./files/".$year.$mes.$dia.".txt";
-//     if(file_exists($rutaFichero)){
-//         unlink($rutaFichero);
-//     }
-// }
+// deleteContacto($nombre). Elimina el contacto cuyo nombre coincida con el parámetro.
+// updateContacto($nomAnt,$nombre,$telefono,$foto). Actualiza el contacto cuyo nombre coincida con $nomAnt con los nuevos datos. También puedes eliminar y añadir.
 ?>

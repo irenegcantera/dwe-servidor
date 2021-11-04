@@ -1,0 +1,49 @@
+body {
+    font-family: 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+    color: rgb(120, 253, 120);
+    text-decoration: underline;
+}
+
+nav {
+    background-color: gainsboro;
+    width: 45%;
+    height: 2em;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    vertical-align: middle;
+    height: 2em;
+    margin: 1em;
+    padding: 1em;
+}
+
+a:hover {
+    background-color: gray;
+    color: white;
+}
+
+img {
+    width: 45%;
+}
+
+table {
+    border: 0px;
+}
+
+tr {
+    background-color:rgb(120, 253, 120);
+}
+
+p {
+    color: gray;
+}
+
+span:hover{
+    color: rgb(105, 224, 105);
+    text-decoration: underline;
+}

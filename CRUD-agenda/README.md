@@ -6,6 +6,6 @@ In progress...
 
 ### Commits
 
-- AT -> commits related to agenda's files
-- CSS -> commits related to agenda's style
-- FUNC -> commits related to agenda's functions
+- AT -> commits related to CRUD's files
+- CSS -> commits related to CRUD's style
+- FUNC -> commits related to CRUD's functions

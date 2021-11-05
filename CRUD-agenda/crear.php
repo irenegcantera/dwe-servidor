@@ -81,7 +81,7 @@
         </td>
     </tr>
 </table>
-<input name='guardar' type='hidden' value='<?php echo $guardado;?>'/>
+<input name='guardar' type='hidden' value=''/> <!-- AQUI SE GUARDA SI SE EDITA O NO-->
 <input name='submit' type="submit" value="Crear contacto"/>
 </form>
 

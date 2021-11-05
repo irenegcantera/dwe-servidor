@@ -17,3 +17,4 @@
         <a href='listar.php'>Listar</a>
         <a href='acercade.php'>Acerca de</a>
     </nav>
+    <br>

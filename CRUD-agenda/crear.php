@@ -54,6 +54,14 @@
     }else{
         // echo "No se ha enviado información al servidor.";
     }
+
+    // EDITAR NOMBRE
+    // if (isset($_REQUEST['guardar'])){
+    //     $nomAnt = $_REQUEST['nomAnterior'];
+    //     updateContacto($nomAnt,$nombre,$telf,$foto);
+    // }
+    
+
 ?>
 
 <form name="formulario" action="crear.php" method="POST" enctype="multipart/form-data">
@@ -97,7 +105,7 @@
 <?php
 if(isset($_REQUEST['editar'])){
     echo "<input name='nomAnterior' type ='hidden' value=".$_REQUEST['nombre'].">";
-    echo "<input name='submit' type='submit' value='Guardar contacto'>";
+    echo "<input name='guardar' type='submit' value='Guardar contacto'>";
 }else{
     echo "<input name='submit' type='submit' value='Crear contacto'>"; 
 }

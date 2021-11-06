@@ -63,14 +63,25 @@
         <td>
             <fieldset>
                 <legend>Nombre</legend>
-                <input name="nombre" type="text" value=""/>
-
+                <?php
+                    if (isset($_REQUEST['editar']) && $_REQUEST['editar'] == true){
+                        echo "<input name='nombre' type='text' value=".$_REQUEST['nombre'].">";
+                    }else{
+                        echo "<input name='nombre' type= 'text' value=''>";
+                    }
+                ?>
             </fieldset>
         </td>
         <td>
             <fieldset>
                 <legend>Teléfono</legend>
-                <input name="telefono" type="text" value=""/>
+                <?php
+                    if (isset($_REQUEST['editar']) && $_REQUEST['editar'] == true){
+                        echo "<input name='telefono' type='text' value=".$_REQUEST['telefono'].">";
+                    }else{
+                        echo "<input name='telefono' type= 'text' value=''>";
+                    }
+                ?>
             </fieldset>
         </td>
         <td>
@@ -81,8 +92,17 @@
         </td>
     </tr>
 </table>
-<input name='guardar' type='hidden' value=''/> <!-- AQUI SE GUARDA SI SE EDITA O NO-->
-<input name='submit' type="submit" value="Crear contacto"/>
+<input name='guardar' type='hidden' value=''/>
+
+<?php
+if(isset($_REQUEST['editar'])){
+    echo "<input name='nomAnterior' type ='hidden' value=".$_REQUEST['nombre'].">";
+    echo "<input name='submit' type='submit' value='Guardar contacto'>";
+}else{
+    echo "<input name='submit' type='submit' value='Crear contacto'>"; 
+}
+?>
+
 </form>
 
 <?php include 'components/footer.php';?>

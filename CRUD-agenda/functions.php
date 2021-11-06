@@ -65,7 +65,7 @@ function showContactos($datos){
             }
         }
 
-        echo "<td><a href = crear.php?editar=true&nombre=".$datos[$key][$indNombre]."&telf=".$datos[$key][$indTelf].">Editar</a><a>Eliminar</a></td>"; // mostrar enlaces de Editar y Eliminar
+        echo "<td><a href = crear.php?editar=true&nombre=".$datos[$key][$indNombre]."&telefono=".$datos[$key][$indTelf].">Editar</a><a>Eliminar</a></td>"; // mostrar enlaces de Editar y Eliminar
         echo "</tr>";
         $indice +=3; // se suma 3 posiciones para la siguiente clave
         $indNombre +=3; // se suma 3 posiciones 

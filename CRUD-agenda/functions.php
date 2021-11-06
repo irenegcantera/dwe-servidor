@@ -102,16 +102,24 @@ function saveContactos($datos){
     
 }
 
+function deleteFoto($rutaFoto,$nombre){
+
+}
+
 // deleteContacto($nombre). Elimina el contacto cuyo nombre coincida con el parámetro.
 function deleteContacto($nombre){
     $datos = getContactos();
+    $indice = 2; // posicion de la ruta de la foto
     foreach($datos as $key => $value){
         foreach($value as $k => $v){
             if($v == $nombre){
                 array_splice($datos, $key, 1);
+                $ruta = $value[$indice];
+                unlink($ruta);
                 //echo "Se ha borrado";
             }
         }
+        $indice +=3; // se suma 3 posiciones para la siguiente clave
     }
 
     // Reindexar las posiciones de los valores

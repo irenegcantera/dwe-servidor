@@ -20,6 +20,7 @@ function addContactos($nombre,$telf,$foto) {
     file_put_contents(FICHERO, "\n", FILE_APPEND);
 }
 
+/* Función q */
 
 /* Función que lee el fichero y recupera la información guardandola en un array */
 function getContactos(){
@@ -78,6 +79,7 @@ function saveContactos($datos){
     unlink(FICHERO); // ELIMINar fichero
     foreach($datos as $key => $value){
         foreach($value as $k => $v){
+            //print_r($v);
             if ($k != 2){
                 file_put_contents(FICHERO, $v.";", FILE_APPEND);
             }else{
@@ -105,7 +107,18 @@ function deleteContacto($nombre){
     saveContactos($datos);
 }
 // updateContacto($nomAnt,$nombre,$telefono,$foto). Actualiza el contacto cuyo nombre coincida con $nomAnt con los nuevos datos. También puedes eliminar y añadir.
-function updateContacto($nomAnt,$nombre,$telef,$foto){
-
+function updateContacto($nomAnt,$nombre,$telf,$foto){
+    $datos = getContactos();
+    foreach($datos as $key => $value){
+        foreach($value as $k => $v){
+            if($v == $nomAnt){
+                $datos[$key][$k] = $nombre;
+                // cambiamos el nombre a la foto también
+                $datos[$key][2] = "./files/photos/".$nombre.".jpg";
+                //echo "se ha reemplazado";
+            }
+        }
+    }
+    saveContactos($datos);
 }
 ?>

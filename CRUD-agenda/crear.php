@@ -1,21 +1,16 @@
-<?php 
+<?php
     include 'components/navbar.php';
     require 'functions.php';
 
-    if(isset($_REQUEST['submit'])){
+    if(isset($_REQUEST['submitCrear'])){
         if(isset($_REQUEST['nombre']) && isset($_REQUEST['telefono'])){
             $nombre = ucwords(strtolower($_REQUEST['nombre'])); // primera lettra en mayúsculas y el resto en minúscula
             $telf = $_REQUEST['telefono'];
-            if(isset($_REQUEST['guardar'])){
-                if(isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK){
-                    $foto = $_FILES['foto'];
-                }else{
-                    $foto = null;
-                    // echo "Ha dado error";
-                }
+            if(isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK){
+                $foto = $_FILES['foto'];
             }else{
                 $foto = null;
-                // echo "No se ha introducido foto";
+                // echo "Ha dado error";
             }
 
             // Comprobaciones
@@ -26,7 +21,7 @@
                 }else{
                     // Recorremos el array y comprobamos que el nombre introducido no está ya en el fichero
                     // Contadores que cuentan las veces que aparece el nombre y el teléfono
-                    $numNombres = 0; 
+                    $numNombres = 0;
                     $numTelefonos = 0;
                     foreach ($datos as $key => $value) {
                         foreach($value as $v){
@@ -56,11 +51,22 @@
     }
 
     // EDITAR NOMBRE
-    // if (isset($_REQUEST['guardar'])){
-    //     $nomAnt = $_REQUEST['nomAnterior'];
-    //     updateContacto($nomAnt,$nombre,$telf,$foto);
-    // }
-    
+    if (isset($_REQUEST['submitEditar'])){
+        // echo "paso por aquí";
+        $nomAnt = $_REQUEST['nomAnt'];
+        $nombre = $_REQUEST['nombre'];
+        $datos = getContactos();
+        foreach($datos as $key => $value){
+            foreach($value as $k => $v){
+                if($v == $nomAnt){
+                    $telf = $value[1];
+                    $foto = $value[2];
+                }
+            }
+        }
+        updateContacto($nomAnt,$nombre,$telf,$foto);
+    }
+
 
 ?>
 
@@ -95,7 +101,7 @@
         <td>
             <fieldset>
                 <legend>Foto</legend>
-                <input name="foto" type="file" />
+                <input name="foto" type="file">
             </fieldset>
         </td>
     </tr>
@@ -104,10 +110,11 @@
 
 <?php
 if(isset($_REQUEST['editar'])){
-    echo "<input name='nomAnterior' type ='hidden' value=".$_REQUEST['nombre'].">";
-    echo "<input name='guardar' type='submit' value='Guardar contacto'>";
+    echo "<input name='nomAnt' type ='hidden' value=".$_REQUEST['nombre'].">";
+    echo "<input name='submitEditar' type='submit' value='Guardar contacto'>";
 }else{
-    echo "<input name='submit' type='submit' value='Crear contacto'>"; 
+    echo "<input name='guardar' type='hidden' value=''/>";
+    echo "<input name='submitCrear' type='submit' value='Crear contacto'>";
 }
 ?>
 

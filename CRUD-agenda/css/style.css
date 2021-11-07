@@ -3,6 +3,7 @@ body {
 }
 
 h1 {
+    font-size:3em;
     color: rgb(120, 253, 120);
     text-decoration: underline;
 }

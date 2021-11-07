@@ -20,9 +20,16 @@ function addContactos($nombre,$telf,$foto) {
     file_put_contents(FICHERO, "\n", FILE_APPEND);
 }
 
-/* Función que comprueba la extensión de la foto */
-function checkExtension($foto){
-
+/* Función que comprueba la extensión jpg de la foto Y DEVUELVE TRUE SI LO ES*/
+function checkExtensionJPG($foto){
+    $temporal = $foto['tmp_name'];
+    $partes = explode('.',$temporal);
+    $extension = strtolower(end($partes));
+    if($extension == "jpg"){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 /* Función que lee el fichero y recupera la información guardandola en un array */

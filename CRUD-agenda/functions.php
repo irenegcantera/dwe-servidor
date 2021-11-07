@@ -20,7 +20,10 @@ function addContactos($nombre,$telf,$foto) {
     file_put_contents(FICHERO, "\n", FILE_APPEND);
 }
 
-/* Función q */
+/* Función que comprueba la extensión de la foto */
+function checkExtension($foto){
+
+}
 
 /* Función que lee el fichero y recupera la información guardandola en un array */
 function getContactos(){
@@ -113,7 +116,9 @@ function updateContacto($nomAnt,$nombre,$telf,$foto){
         foreach($value as $k => $v){
             if($v == $nomAnt){
                 $datos[$key][$k] = $nombre;
-                // cambiamos el nombre a la foto también
+                // renombramos la foto con el nuevo nombre
+                rename($foto,"./files/photos/".$nombre.".jpg");
+                // cambiamos el nombre a la foto también en el fichero
                 $datos[$key][2] = "./files/photos/".$nombre.".jpg";
                 //echo "se ha reemplazado";
             }

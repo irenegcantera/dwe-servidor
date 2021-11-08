@@ -2,9 +2,10 @@
     include 'components/navbar.php';
     require 'functions.php';
 
+    // CREAR CONTACTO
     if(isset($_REQUEST['submitCrear'])){
         if(isset($_REQUEST['nombre']) && isset($_REQUEST['telefono'])){
-            $nombre = ucwords(strtolower($_REQUEST['nombre'])); // primera lettra en mayúsculas y el resto en minúscula
+            $nombre = ucwords(strtolower($_REQUEST['nombre'])); // primera letra en mayúsculas y el resto en minúscula
             $telf = $_REQUEST['telefono'];
             if(isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK){
                 $foto = $_FILES['foto'];
@@ -13,8 +14,9 @@
                 echo "<p>Error al subir el archivo.</p>";
             }
 
-            // Comprobaciones
             $datos = getContactos();
+
+            // ES OBLIGATORIO SUBIR UNA FOTO
             if ($foto != null){
                 if (count($datos) == 0){
                     addContactos($nombre,$telf,$foto);
@@ -41,26 +43,23 @@
                     }
                 }
             }else{
-                // echo "Se debe subir una foto";
+                echo "<p>HAY QUE SUBIR UNA FOTO PARA CREAR UN CONTACTO</p>";
             }
         }else{
-            // echo "Hay que rellenar todos los campos.";
+            echo "<p>HAY QUE RELLENAR TODOS LOS CAMPOS</p>";
         }
-    }else{
-        // echo "No se ha enviado información al servidor.";
     }
 
     // EDITAR NOMBRE
     if (isset($_REQUEST['submitEditar'])){
-        // echo "paso por aquí";
         $nomAnt = $_REQUEST['nomAnt'];
         $nombre = $_REQUEST['nombre'];
         $datos = getContactos();
         foreach($datos as $key => $value){
             foreach($value as $k => $v){
                 if($v == $nomAnt){
-                    $telf = $value[1];
-                    $foto = $value[2];
+                    $telf = $value[1]; // recupera el teléfono
+                    $foto = $value[2]; // recupera la ruta de la foto
                 }
             }
         }
@@ -102,12 +101,12 @@
         <td>
             <fieldset>
                 <legend>Foto</legend>
+                <!-- accept solo muestra esos formatos de archivo a la hora de subirlos -->
                 <input name="foto" type="file" accept=".jpeg, .jpg">
             </fieldset>
         </td>
     </tr>
 </table>
-<input name='guardar' type='hidden' value=''/>
 
 <?php
 if(isset($_REQUEST['editar'])){

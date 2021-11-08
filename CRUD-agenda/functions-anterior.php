@@ -1,19 +1,25 @@
 <?php
 require_once("conf.inc"); // cargar fichero de configuración
 
-/* Función que almacena el nombre, teléfono y la ruta de la foto en el fichero. Además, la foto se guarda en una subcarpeta */
+// función que almacena los nombre y teléfonos en un fichero
+// y la foto en una subcarpeta
 function addContactos($nombre,$telf,$foto) {
     // mover la foto al directorio photos
     $temporal = $foto['tmp_name'];
     $partes = explode(".", $foto['name']);
     $extension= strtolower(end($partes));
     $rutaFoto = "./files/photos/".$nombre.".".$extension;
-    move_uploaded_file($temporal,$rutaFoto); // ruta anterior, ruta nueva
+    if (move_uploaded_file($temporal,$rutaFoto)){ // ruta anterior, ruta nueva
+        // echo "Fichero subido correctamente.";
+    }else{
+        // echo "Ha ocurrido un error.";
+    }
 
     // Si existe se introducirá el nombre y telefono, sino existe se creará y se introducirá
     file_put_contents(FICHERO, $nombre.";".$telf.";".$rutaFoto, FILE_APPEND); // para que no sobreescriba
     file_put_contents(FICHERO, "\n", FILE_APPEND);
 }
+
 
 /* Función que lee el fichero y recupera la información guardandola en un array */
 function getContactos(){
@@ -24,20 +30,23 @@ function getContactos(){
         array_pop($linea_datos); 
 
         $datos = array(); // nuevo array bidimensional
-        
+        $i = 0; // contador
+
         foreach($linea_datos as $key => $value){
             foreach(explode(';',$value) as $v){
-                $datos[$key][] = $v;
+                $datos[$key][$i++] = $v;
             }
         }
+
         return $datos;
-    }else{ // si no existe el fichero se creará
+    }else{
         $fichero = fopen("./files/contactos.txt","w");
         fclose($fichero);
     }
+    
 }
 
-/* Función que muestra una tabla con los datos del contacto y las operaciones de Editar y Eliminar */
+/* Función que muestra la tabla */
 function showContactos($datos){
     if(!empty($datos)){
         echo "<br><table>
@@ -48,33 +57,39 @@ function showContactos($datos){
                 <th>Operaciones</th>
             </tr>";
     
+        $indice = 2; // indice que sirve para mostrar la imagen en la tabla
+        $indNombre = 0; // indice para el nombre
+        $indTelf = 1; // indice para el teléfono
         foreach($datos as $key => $value){
             echo "<tr>";
             foreach($value as $k => $v){
-                if ($k != 2){ 
+                if ($k != $indice){ // si la clave es igual al índice, se imprime la imagen
                     echo "<td>$v</td>";
-                }else{ // si la clave es igual a la posición de la imagen, que es 2, se imprimirá
+                }else{
                     echo "<td><img src='$v' style = 'width:25%'></td>";
                 }
             }
-            // 0 es la posición del nombre y 1 del teléfono
-            echo "<td><a href = crear.php?editar=true&nombre=".$datos[$key][0]."&telefono=".$datos[$key][1].">Editar</a>
-                    <br><br>
-                    <a href = listar.php?nombre=".$datos[$key][0].">Eliminar</a></td>"; // mostrar enlaces de Editar y Eliminar
+
+            echo "<td><a href = crear.php?editar=true&nombre=".$datos[$key][$indNombre]."&telefono=".$datos[$key][$indTelf].">Editar</a>
+                    <a href = listar.php?nombre=".$datos[$key][$indNombre].">Eliminar</a></td>"; // mostrar enlaces de Editar y Eliminar
             echo "</tr>";
+            $indice +=3; // se suma 3 posiciones para la siguiente clave
+            $indNombre +=3; // se suma 3 posiciones 
+            $indTelf +=3; // se suma 3 posiciones 
         }
         echo "</table><br>";
     }else{
         echo "<p>NO HAY NINGÚN CONTACTO EN LA AGENDA</p>";
     }
+    
 }
 
-/* Función que almacena de nuevo en el fichero los datos modificados */
 function saveContactos($datos){
-    unlink(FICHERO); // elimina el fichero
+    unlink(FICHERO); // ELIMINar fichero
+    $indice = 2; // indice que sirve para mostrar la imagen en la tabla
     foreach($datos as $key => $value){
         foreach($value as $k => $v){
-            if ($k != 2){
+            if ($k != $indice){
                 file_put_contents(FICHERO, $v.";", FILE_APPEND);
             }else{
                 file_put_contents(FICHERO, $v, FILE_APPEND); // para que no se sobreescriba
@@ -82,38 +97,44 @@ function saveContactos($datos){
              
         }   
         file_put_contents(FICHERO, "\n", FILE_APPEND);
+        $indice +=3; // se suma 3 posiciones para la siguiente clave
     }
+    
 }
 
-/* Función que elimina el contacto cuyo nombre coincida con el parámetro.*/
+function deleteFoto($rutaFoto,$nombre){
+
+}
+
+// deleteContacto($nombre). Elimina el contacto cuyo nombre coincida con el parámetro.
 function deleteContacto($nombre){
     $datos = getContactos();
+    $indice = 2; // posicion de la ruta de la foto
     foreach($datos as $key => $value){
         foreach($value as $k => $v){
-            if($v == $nombre){ // si el valor conincide con el parámetro
-                array_splice($datos, $key, 1); // elimina la clave del array de datos
-                $ruta = $value[2];
-                unlink($ruta); // elimina la foto con el nombre del parámetro
+            if($v == $nombre){
+                array_splice($datos, $key, 1);
+                $ruta = $value[$indice];
+                unlink($ruta);
+                //echo "Se ha borrado";
             }
         }
-    }        
-    saveContactos($datos); // guarda los datos
-}
+        $indice +=3; // se suma 3 posiciones para la siguiente clave
+    }
 
-/* Función que actualiza SOLO el nombre del contacto */
-function updateContacto($nomAnt,$nombre,$telf,$foto){
-    $datos = getContactos();
+    // Reindexar las posiciones de los valores
+    $datosActualizados = array();
+    $i = 0;
     foreach($datos as $key => $value){
         foreach($value as $k => $v){
-            if($v == $nomAnt){
-                $datos[$key][$k] = $nombre;
-                // renombramos la foto del directorio con el nuevo nombre
-                rename($foto,"./files/photos/".$nombre.".jpg");
-                // cambiamos el nombre a la foto del array de datos también
-                $datos[$key][2] = "./files/photos/".$nombre.".jpg";
-            }
+            $datosActualizados[$key][$i++] = $v;
         }
     }
-    saveContactos($datos);
+        
+    saveContactos($datosActualizados);
+}
+// updateContacto($nomAnt,$nombre,$telefono,$foto). Actualiza el contacto cuyo nombre coincida con $nomAnt con los nuevos datos. También puedes eliminar y añadir.
+function updateContacto($nomAnt,$nombre,$telef,$foto){
+
 }
 ?>

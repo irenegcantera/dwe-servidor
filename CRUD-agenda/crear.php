@@ -10,7 +10,7 @@
                 $foto = $_FILES['foto'];
             }else{
                 $foto = null;
-                // echo "Ha dado error";
+                echo "<p>Error al subir el archivo.</p>";
             }
 
             // Comprobaciones
@@ -37,7 +37,7 @@
                     if (($numNombres == 0) && ($numTelefonos == 0)) {
                         addContactos($nombre,$telf,$foto);
                     }else{
-                        // echo "Se repite el nombre o el teléfono";
+                        echo "<p>Error al crear el contacto. Recuerde que el <span>nombre NO</span> debe existir.</p>";
                     }
                 }
             }else{
@@ -101,7 +101,7 @@
         <td>
             <fieldset>
                 <legend>Foto</legend>
-                <input name="foto" type="file">
+                <input name="foto" type="file" accept=".jpeg, .jpg">
             </fieldset>
         </td>
     </tr>
@@ -111,9 +111,11 @@
 <?php
 if(isset($_REQUEST['editar'])){
     echo "<input name='nomAnt' type ='hidden' value=".$_REQUEST['nombre'].">";
+    echo "<br>";
     echo "<input name='submitEditar' type='submit' value='Guardar contacto'>";
 }else{
     echo "<input name='guardar' type='hidden' value=''/>";
+    echo "<br>";
     echo "<input name='submitCrear' type='submit' value='Crear contacto'>";
 }
 ?>

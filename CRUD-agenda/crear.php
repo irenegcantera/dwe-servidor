@@ -65,8 +65,9 @@
             }
         }
         updateContacto($nomAnt,$nombre,$telf,$foto);
+        //redirección a listar.php sin formato
+        //header("Location: listar.php/");
     }
-
 
 ?>
 
@@ -112,7 +113,7 @@
 if(isset($_REQUEST['editar'])){
     echo "<input name='nomAnt' type ='hidden' value=".$_REQUEST['nombre'].">";
     echo "<br>";
-    echo "<input name='submitEditar' type='submit' value='Guardar contacto'>";
+    echo "<input name='submitEditar' type='submit' value='Guardar contacto' onclick='location.href('listar.php')'>";
 }else{
     echo "<input name='guardar' type='hidden' value=''/>";
     echo "<br>";

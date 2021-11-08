@@ -64,6 +64,7 @@ function showContactos($datos){
             }
             // 0 es la posición del nombre y 1 del teléfono
             echo "<td><a href = crear.php?editar=true&nombre=".$datos[$key][0]."&telefono=".$datos[$key][1].">Editar</a>
+                    <br><br>
                     <a href = listar.php?nombre=".$datos[$key][0].">Eliminar</a></td>"; // mostrar enlaces de Editar y Eliminar
             echo "</tr>";
         }

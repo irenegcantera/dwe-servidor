@@ -1,6 +1,6 @@
 <?php
     include 'components/navbar.php';
-    require 'functions.php';
+    require 'functions-db.php';
 
     // CREAR CONTACTO
     if(isset($_REQUEST['submitCrear'])){

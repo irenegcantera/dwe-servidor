@@ -1,5 +1,5 @@
 <?php
-require_once("conf.inc"); // cargar fichero de configuración
+require_once("config.inc"); // cargar fichero de configuración
 
 /* Función que almacena el nombre, teléfono y la ruta de la foto en el fichero. Además, la foto se guarda en una subcarpeta */
 function addContactos($nombre,$telf,$foto) {

@@ -1,10 +1,11 @@
 <?php
-require_once("config.inc"); // cargar fichero de configuración
+include_once("config.inc"); // cargar fichero de configuración
 
 /* Función de conexión con la base de datos */
 function connection() {
-    $connection = new mysqli($host,$user,$pass,$base,$port);
-    return ($connection -> connect_errno == 0) ? $connection : null; 
+    $connection = new mysqli($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['pass'],$GLOBALS['base']);
+    $error = $connection -> connect_errno;
+    return ($error == 0) ? $connection : null;
 }
 
 /* Función que almacena el nombre, teléfono y la ruta de la foto en el fichero. Además, la foto se guarda en una subcarpeta */
@@ -12,9 +13,10 @@ function addContactos($nombre,$telf,$foto) {
     // conectar con la base de datos y comprobar si se ha realizado correctamente
     $connection = connection();
     if($connection != null){
-        $consulta = $connection -> query("INSERT INTO contactos VALUES ('$nombre','$telf','$foto'");
+        $ruta = moveFoto($nombre,$foto);
+        $consulta = $connection -> query("INSERT INTO contactos VALUES ('$nombre','$telf','$ruta')");
         $connection -> close();
-        moveFoto($nombre,$foto);
+        
     }else{
         echo "SIN CONEXIÓN";
     }
@@ -27,28 +29,23 @@ function moveFoto($nombre,$foto){
     $extension= strtolower(end($partes));
     $rutaFoto = "./files/photos/".$nombre.".".$extension;
     move_uploaded_file($temporal,$rutaFoto); // ruta anterior, ruta nueva
+    return $rutaFoto;
 }
 
 /* Función que lee el fichero y recupera la información guardandola en un array */
 function getContactos(){
-    if (file_exists(FICHERO)){
-        $fichero = file_get_contents(FICHERO);  // obtener todo el contenido
-        $linea_datos = explode("\n",$fichero); // guardar el contenido separado por un salto de línea en un array 
-        // Eliminar el último índice del array ya que se introduce un espacio en blanco
-        array_pop($linea_datos); 
-
-        $datos = array(); // nuevo array bidimensional
-        
-        foreach($linea_datos as $key => $value){
-            foreach(explode(';',$value) as $v){
-                $datos[$key][] = $v;
-            }
+    $connection = connection();
+    $datos = array(); // nuevo array bidimensional
+    if($connection != null){
+        $consulta = $connection -> query("SELECT * FROM contactos");
+        while($row = $consulta -> fecth_object()){
+            $array[] = $row;
         }
-        return $datos;
-    }else{ // si no existe el fichero se creará
-        $fichero = fopen("./files/contactos.txt","w");
-        fclose($fichero);
+        $connection -> close();
+    }else{ 
+        echo "SIN CONEXIÓN";
     }
+    return $array;
 }
 
 /* Función que muestra una tabla con los datos del contacto y las operaciones de Editar y Eliminar */

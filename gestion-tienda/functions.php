@@ -1,4 +1,4 @@
-1<?php
+<?php
 require 'config.inc';
 
 // ARCHIVO PHP CON FUNCIONES DE LA APLICACIÓN
@@ -13,10 +13,17 @@ function connection(){ // FUNCIONA
         echo $e -> getMessage();
         exit; // finaliza el proceso
     }
-    echo "CONEXIÓN REALIZADA";
+    return $db;
+    // echo "CONEXIÓN REALIZADA";
 }
 
-
-
-
+function addProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia){ // FUNCIONA
+    //ABRIR CONEXIÓN
+    $db = connection();
+    // comprobar conexión 
+    $consulta = "INSERT INTO producto VALUES(".$cod.",".$nombre.",".$nombre_corto.",".$descripcion.",".$foto.",".$pvp.",".$familia.")";
+    $registro = $db -> exec($consulta);
+    // cerrar conexión
+    $db = null;
+}
 ?>

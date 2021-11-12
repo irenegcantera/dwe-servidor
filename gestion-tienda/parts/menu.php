@@ -1,16 +1,16 @@
 <html>
 	<head>
 		<title>Menu Desplegable</title>
-		<link rel = "stylesheet" type = "text/css" href = "../css/style.css">
+		<link rel = "stylesheet" type = "text/css" href = <?=PATH."css/style.css"?>>
 	</head>
 	<body>
 		<div id="header">
 			<nav> <!-- Aqui estamos iniciando la nueva etiqueta nav -->
 				<ul class="nav">
-					<li><a href="./index.php">Inicio</a></li>
-					<li><a href="../productos/index.php">Productos</a>
+					<li><a href=<?=PATH."index.php"?>>Inicio</a></li>
+					<li><a href=<?=PATH."productos/producto.php"?>>Productos</a>
 						<ul>
-							<li><a href="../productos/crear.php">Crear</a></li>
+							<li><a href=<?=PATH."productos/crear.php"?>>Crear</a></li>
 							<li><a href="">Listar</a></li>
                             <li><a href="">Stock</a></li>
 						</ul>
@@ -35,6 +35,3 @@
 				</ul>
 			</nav><!-- Aqui estamos cerrando la nueva etiqueta nav -->
 		</div>
-	</body>
-</html>
-<br><br>

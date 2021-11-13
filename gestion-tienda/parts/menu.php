@@ -22,9 +22,9 @@
  
 						</ul>
 					</li>
-					<li><a href="">Tiendas</a>
+					<li><a href=<?=PATH."tiendas/tienda.php"?>>Tiendas</a>
 						<ul>
-							<li><a href="">Crear</a></li>
+							<li><a href=<?=PATH."tiendas/crear.php"?>>Crear</a></li>
 							<li><a href="">Listar</a></li>
                             <li><a href="">Stock</a></li>
 						</ul>

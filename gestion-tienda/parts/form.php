@@ -6,15 +6,14 @@
 <form name="formulario" action="" method="POST" enctype="multipart/form-data">
 <p>Introduce los siguientes datos:</p>
 <table>
-    <tr>
-        <td><fieldset>
-            <legend>Código</legend>
-            <input name='cod' type= 'text' value='' required>
-        </fieldset></td>
-       
+    <tr>      
         <?php
             $directory = obtainDirectory();
             if($directory == "productos"){
+                echo "<td><fieldset>
+                        <legend>Código</legend>
+                        <input name='cod' type= 'text' value='' required>
+                      </fieldset></td>";
                 echo "<td><fieldset>
                         <legend>Nombre</legend>
                         <input name='nombre' type= 'text' value=''>
@@ -55,6 +54,10 @@
 
             }else if($directory == "familias"){
                 echo "<td><fieldset>
+                        <legend>Código</legend>
+                        <input name='cod' type= 'text' value='' required>
+                      </fieldset></td>";
+                echo "<td><fieldset>
                         <legend>Nombre</legend>
                         <input name='nombre' type= 'text' value='' required>
                       </fieldset></td>";
@@ -66,9 +69,8 @@
                       </fieldset></td>";
                 echo "<td><fieldset>
                         <legend>Teléfono</legend>
-                        <input name='tlf' type= 'text' value='' required>
+                        <input name='tlf' type= 'text' value=''>
                       </fieldset></td>";
-
             }
         ?>
     </tr>

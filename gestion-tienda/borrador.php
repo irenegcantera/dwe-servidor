@@ -1,5 +1,5 @@
 <?php
-// require 'config.inc';
+// require 'conf/config.inc';
 //     try {
 //         $db = new PDO("mysql:host=".LOCALHOST.";port=".PORT.";dbname=".DB,USER,PASSWORD);
 //     }catch(PDOException $pdo){
@@ -12,7 +12,12 @@
 
 //     echo "CONEXIÓN REALIZADA";
 
-//     $consulta = "INSERT INTO producto VALUES('HOLA',NULL,'Prueba','Esto es una prueba',NULL,5.3,'MP3')";
+//     $a = "hola2";
+//     $b = "hola";
+//     $c = 45.7;
+//     $d = "CONSOL";
+
+//     $consulta = "INSERT INTO producto(cod,nombre_corto,PVP,familia) VALUES('".$a."','".$b."',".$c.",'".$d."')";
 //     $registro = $db -> exec($consulta);
 //     echo "Se han insertado ".$registro ." registros<br>";
 

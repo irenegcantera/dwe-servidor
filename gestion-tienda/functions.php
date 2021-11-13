@@ -12,18 +12,48 @@ function connection(){ // FUNCIONA
         echo $e -> getMessage();
         exit; // finaliza el proceso
     }
+    //echo "CONEXIÓN REALIZADA";
     return $db;
-    // echo "CONEXIÓN REALIZADA";
 }
 
 /* Función que añade productos a la base de datos */
 function addProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia){ // FUNCIONA
     //ABRIR CONEXIÓN
     $db = connection();
-    // comprobar conexión 
-    $consulta = "INSERT INTO producto VALUES(".$cod.",".$nombre.",".$nombre_corto.",".$descripcion.",".$foto.",".$pvp.",".$familia.")";
+    if ($nombre == NULL){
+        if($descripcion == NULL){
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto (cod,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre_corto."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto (cod,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }else{
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto(cod,nombre_corto,descripcion,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$descripcion."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto(cod,nombre_corto,descripcion,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$descripcion."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }
+    }else{
+        if($descripcion == NULL){
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }else{
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,descripcion,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$descripcion."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,descripcion,foto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$descripcion."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }
+    }
+    
     $registro = $db -> exec($consulta);
-    // cerrar conexión
+    // cerrar conexión e instancias
+    $registro = null;
+    $consulta = null;
     $db = null;
 }
 

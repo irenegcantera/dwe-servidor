@@ -3,7 +3,7 @@ require_once '../conf/config.inc';
 include '../parts/menu.php';
 ?>
 
-        <br>
+        <br><br><br>
         <div style = "text-align: center;">
             <h2>Página de productos</h2>
             <p>Podrás crear un nuevo producto y listar los existentes.</p>

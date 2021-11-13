@@ -1,5 +1,6 @@
 table {
-    border: 0px;
+    margin: 0 auto;
+    border: 1px solid black;
     text-align: center;
 }
 
@@ -7,6 +8,6 @@ tr {
     background-color:gainsboro;
 }
 
-.tr-color {
-    background-color:rgb(120, 253, 120);
+p {
+    margin: 0 auto;
 }

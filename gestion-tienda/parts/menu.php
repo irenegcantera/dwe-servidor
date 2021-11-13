@@ -11,7 +11,7 @@
 					<li><a href=<?=PATH."productos/producto.php"?>>Productos</a>
 						<ul>
 							<li><a href=<?=PATH."productos/crear.php"?>>Crear</a></li>
-							<li><a href="">Listar</a></li>
+							<li><a href=<?=PATH."productos/listar.php"?>>Listar</a></li>
                             <li><a href="">Stock</a></li>
 						</ul>
 					</li>
@@ -35,3 +35,6 @@
 				</ul>
 			</nav><!-- Aqui estamos cerrando la nueva etiqueta nav -->
 		</div>
+	</body>
+</html>
+<br><br><br>

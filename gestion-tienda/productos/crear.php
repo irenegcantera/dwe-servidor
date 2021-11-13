@@ -9,8 +9,8 @@ include '../parts/form.php'; // ya incluye las funciones
             $cod = $_REQUEST['cod'];
         }
 
-        if(isset($_REQUEST['nombre '])){
-            $nombre = $_REQUEST['nombre '];
+        if(isset($_REQUEST['nombre'])){
+            $nombre = $_REQUEST['nombre'];
         } else{
             $nombre = NULL;
         }

@@ -15,9 +15,9 @@
                             <li><a href="">Stock</a></li>
 						</ul>
 					</li>
-					<li><a href="">Familias</a>
+					<li><a href=<?=PATH."familias/familia.php"?>>Familias</a>
 						<ul>
-							<li><a href="">Crear</a></li>
+							<li><a href=<?=PATH."familias/crear.php"?>>Crear</a></li>
 							<li><a href="">Listar</a></li>
  
 						</ul>

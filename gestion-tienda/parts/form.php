@@ -11,14 +11,14 @@
             <legend>Código</legend>
             <input name='cod' type= 'text' value='' required>
         </fieldset></td>
-        <td><fieldset>
-            <legend>Nombre</legend>
-            <input name='nombre' type= 'text' value=''>
-        </fieldset></td>
        
         <?php
             $directory = obtainDirectory();
             if($directory == "productos"){
+                echo "<td><fieldset>
+                        <legend>Nombre</legend>
+                        <input name='nombre' type= 'text' value=''>
+                      </fieldset></td>";
                 echo "<td><fieldset>
                         <legend>Nombre corto</legend>
                         <input name='ncorto' type= 'text' value='' required>
@@ -52,7 +52,18 @@
                     $consulta = null;
                     $row = null;
                     $db = null;
+
+            }else if($directory == "familias"){
+                echo "<td><fieldset>
+                        <legend>Nombre</legend>
+                        <input name='nombre' type= 'text' value='' required>
+                      </fieldset></td>";
+                
             }else if($directory == "tiendas"){
+                echo "<td><fieldset>
+                        <legend>Nombre</legend>
+                        <input name='nombre' type= 'text' value='' required>
+                      </fieldset></td>";
                 echo "<td><fieldset>
                         <legend>Teléfono</legend>
                         <input name='tlf' type= 'text' value='' required>

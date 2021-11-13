@@ -2,7 +2,7 @@
 
 // ARCHIVO PHP CON FUNCIONES DE LA APLICACIÓN
 /* Función que conecta con la base de datos USANDO PDO */
-function connection(){ // FUNCIONA
+function connection(){ 
     try {
         $db = new PDO("mysql:host=".LOCALHOST.";port=".PORT.";dbname=".DB,USER,PASSWORD);
     }catch(PDOException $pdo){
@@ -12,12 +12,11 @@ function connection(){ // FUNCIONA
         echo $e -> getMessage();
         exit; // finaliza el proceso
     }
-    //echo "CONEXIÓN REALIZADA";
     return $db;
 }
 
 /* Función que añade productos a la base de datos */
-function addProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia){ // FUNCIONA
+function addProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia){ 
     //ABRIR CONEXIÓN
     $db = connection();
     if ($nombre == NULL){
@@ -58,7 +57,7 @@ function addProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia
 }
 
 /* Función que añade familias de productos a la base de datos */
-function addFamilia($cod,$nombre){ // FUNCIONA
+function addFamilia($cod,$nombre){ 
     //ABRIR CONEXIÓN
     $db = connection();
     $consulta = "INSERT INTO familia(cod,nombre) VALUES('".$cod."','".$nombre."')";
@@ -69,8 +68,8 @@ function addFamilia($cod,$nombre){ // FUNCIONA
     $db = null;
 }
 
-/* Función que añade familias de productos a la base de datos */
-function addTienda($nombre,$tlf){ // FUNCIONA
+/* Función que añade tiendas a la base de datos */
+function addTienda($nombre,$tlf){ 
     //ABRIR CONEXIÓN
     $db = connection();
 
@@ -88,35 +87,35 @@ function addTienda($nombre,$tlf){ // FUNCIONA
 }
 
 /* Función que actualiza productos de la base de datos */
-function updateProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia){ // FUNCIONA
+function updateProducto($cod,$nombre,$nombre_corto,$desc,$foto,$pvp,$familia){ 
     //ABRIR CONEXIÓN
     $db = connection();
     if ($nombre == NULL){
-        if($descripcion == NULL){
+        if($desc == NULL){
             if($foto == NULL){
-                $consulta = "INSERT INTO producto(cod,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre_corto."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre_corto='".$nombre_corto."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }else{
-                $consulta = "INSERT INTO producto(cod,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre_corto='".$nombre_corto."', foto = '".$foto."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }
         }else{
             if($foto == NULL){
-                $consulta = "INSERT INTO producto(cod,nombre_corto,descripcion,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$descripcion."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre_corto='".$nombre_corto."', descripcion = '".$desc."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }else{
-                $consulta = "INSERT INTO producto(cod,nombre_corto,descripcion,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$descripcion."','".$foto."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre_corto='".$nombre_corto."', descripcion = '".$desc."', foto = '".$foto."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }
         }
     }else{
-        if($descripcion == NULL){
+        if($desc == NULL){
             if($foto == NULL){
-                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre = '".$nombre."',nombre_corto='".$nombre_corto."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }else{
-                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre = '".$nombre."',nombre_corto='".$nombre_corto."', foto = '".$foto."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }
         }else{
             if($foto == NULL){
-                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,descripcion,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$descripcion."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre = '".$nombre."',nombre_corto='".$nombre_corto."', descripcion = '".$desc."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }else{
-                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,descripcion,foto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$descripcion."','".$foto."',".$pvp.",'".$familia."')";
+                $consulta = "UPDATE producto SET nombre = '".$nombre."',nombre_corto='".$nombre_corto."', descripcion = '".$desc."', foto = '".$foto."', PVP = ".$pvp.", familia ='".$familia."' WHERE cod = '".$cod."'";
             }
         }
     }
@@ -128,6 +127,35 @@ function updateProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$fami
     $db = null;
 }
 
+/* Función que actualiza datos de familias de productos de la base de datos */
+function updateFamilia($cod,$nombre){ 
+    //ABRIR CONEXIÓN
+    $db = connection();
+    $consulta = "UPDATE familia SET nombre ='".$nombre."' WHERE cod = '".$cod."'";
+    $registro = $db -> exec($consulta);
+    // cerrar conexión e instancias
+    $registro = null;
+    $consulta = null;
+    $db = null;
+}
+
+/* Función que actualiza las tiendas de la base de datos */
+function updateTienda($cod,$nombre,$tlf){ 
+    //ABRIR CONEXIÓN
+    $db = connection();
+
+    if ($tlf == NULL){
+        $consulta = "UPDATE tienda SET nombre = '".$nombre."' WHERE cod = ".$cod;
+    }else{
+        $consulta = "UPDATE tienda SET nombre = '".$nombre."', tlf = '".$tlf."' WHERE cod = ".$cod;
+    }
+
+    $registro = $db -> exec($consulta);
+    // cerrar conexión e instancias
+    $registro = null;
+    $consulta = null;
+    $db = null;
+}
 
 /* Función que muestra los datos de la base de datos en la tabla producto */
 function showDatosProductos(){

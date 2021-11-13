@@ -23,9 +23,9 @@ function addProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia
     if ($nombre == NULL){
         if($descripcion == NULL){
             if($foto == NULL){
-                $consulta = "INSERT INTO producto (cod,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre_corto."',".$pvp.",'".$familia."')";
+                $consulta = "INSERT INTO producto(cod,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre_corto."',".$pvp.",'".$familia."')";
             }else{
-                $consulta = "INSERT INTO producto (cod,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
+                $consulta = "INSERT INTO producto(cod,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
             }
         }else{
             if($foto == NULL){
@@ -57,6 +57,17 @@ function addProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia
     $db = null;
 }
 
+/* Función que añade familias de productos a la base de datos */
+function addFamilia($cod,$nombre){ // FUNCIONA
+    //ABRIR CONEXIÓN
+    $db = connection();
+    $consulta = "INSERT INTO familia(cod,nombre) VALUES('".$cod."','".$nombre."')";
+    $registro = $db -> exec($consulta);
+    // cerrar conexión e instancias
+    $registro = null;
+    $consulta = null;
+    $db = null;
+}
 
 /* Función que obtiene el directorio en el que se ejecuta crear.php */
 function obtainDirectory(){

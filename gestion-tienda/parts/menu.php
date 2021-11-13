@@ -18,14 +18,14 @@
 					<li><a href=<?=PATH."familias/familia.php"?>>Familias</a>
 						<ul>
 							<li><a href=<?=PATH."familias/crear.php"?>>Crear</a></li>
-							<li><a href="">Listar</a></li>
+							<li><a href=<?=PATH."familias/listar.php"?>>Listar</a></li>
  
 						</ul>
 					</li>
 					<li><a href=<?=PATH."tiendas/tienda.php"?>>Tiendas</a>
 						<ul>
 							<li><a href=<?=PATH."tiendas/crear.php"?>>Crear</a></li>
-							<li><a href="">Listar</a></li>
+							<li><a href=<?=PATH."tiendas/listar.php"?>>Listar</a></li>
                             <li><a href="">Stock</a></li>
 						</ul>
 					</li>                                        

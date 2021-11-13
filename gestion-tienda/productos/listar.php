@@ -7,6 +7,6 @@
 
 
     // mostrar tabla, ultima columna editar y eliminas, te llevará a crear.php
-    showDatos("producto");
+    showDatosProductos();
 ?>
 

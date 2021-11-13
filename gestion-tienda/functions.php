@@ -87,6 +87,40 @@ function addTienda($nombre,$tlf){ // FUNCIONA
     $db = null;
 }
 
+/* Función que muestra los datos de la base de datos en una tabla que se pasa por parámetro */
+function showDatos($tabla){
+    $db = connection(); // ABRIR CONEXIÓN
+    $consulta = $db -> query("SELECT * FROM ".$tabla,PDO::FETCH_OBJ);
+
+    //tabla con datos
+    echo "<table border><tr>   
+            <th>CÓDIGO</th>
+            <th>NOMBRE</th>
+            <th>NOMBRE CORTO</th>
+            <th>DESCRIPCIÓN</th>
+            <th>FOTO</th>
+            <th>PVP</th>
+            <th>FAMILIA</th> 
+            <th>OPERACIONES</th> 
+        </tr>";
+    while($row = $consulta -> fetch()){
+        echo "<tr><td>".$row -> cod."</td>";
+        echo "<td>".$row -> nombre."</td>";
+        echo "<td>".$row -> nombre_corto."</td>";
+        echo "<td>".$row -> descripcion."</td>";
+        echo "<td>".$row -> foto."</td>";
+        echo "<td>".$row -> PVP."</td>";
+        echo "<td>".$row -> familia."</td>";
+        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true'>Eliminar</a></td></tr>";
+    }
+    echo "</table>";
+
+    // cerrar la conexión e instancias
+    $consulta = null;
+    $row = null;
+    $db = null;
+}
+
 /* Función que obtiene el directorio en el que se ejecuta crear.php */
 function obtainDirectory(){
     $dirArray = explode("/", $_SERVER['PHP_SELF']);

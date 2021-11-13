@@ -87,10 +87,52 @@ function addTienda($nombre,$tlf){ // FUNCIONA
     $db = null;
 }
 
-/* Función que muestra los datos de la base de datos en una tabla que se pasa por parámetro */
-function showDatos($tabla){
+/* Función que actualiza productos de la base de datos */
+function updateProducto($cod,$nombre,$nombre_corto,$descripcion,$foto,$pvp,$familia){ // FUNCIONA
+    //ABRIR CONEXIÓN
+    $db = connection();
+    if ($nombre == NULL){
+        if($descripcion == NULL){
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto(cod,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre_corto."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto(cod,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }else{
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto(cod,nombre_corto,descripcion,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$descripcion."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto(cod,nombre_corto,descripcion,foto,PVP,familia) VALUES('".$cod."','".$nombre_corto."','".$descripcion."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }
+    }else{
+        if($descripcion == NULL){
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,foto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }else{
+            if($foto == NULL){
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,descripcion,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$descripcion."',".$pvp.",'".$familia."')";
+            }else{
+                $consulta = "INSERT INTO producto(cod,nombre,nombre_corto,descripcion,foto,PVP,familia) VALUES('".$cod."','".$nombre."','".$nombre_corto."','".$descripcion."','".$foto."',".$pvp.",'".$familia."')";
+            }
+        }
+    }
+    
+    $registro = $db -> exec($consulta);
+    // cerrar conexión e instancias
+    $registro = null;
+    $consulta = null;
+    $db = null;
+}
+
+
+/* Función que muestra los datos de la base de datos en la tabla producto */
+function showDatosProductos(){
     $db = connection(); // ABRIR CONEXIÓN
-    $consulta = $db -> query("SELECT * FROM ".$tabla,PDO::FETCH_OBJ);
+    $consulta = $db -> query("SELECT * FROM producto",PDO::FETCH_OBJ);
 
     //tabla con datos
     echo "<table border><tr>   
@@ -111,6 +153,56 @@ function showDatos($tabla){
         echo "<td>".$row -> foto."</td>";
         echo "<td>".$row -> PVP."</td>";
         echo "<td>".$row -> familia."</td>";
+        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true'>Eliminar</a></td></tr>";
+    }
+    echo "</table>";
+
+    // cerrar la conexión e instancias
+    $consulta = null;
+    $row = null;
+    $db = null;
+}
+
+/* Función que muestra los datos de la base de datos en la tabla familia */
+function showDatosFamilias(){
+    $db = connection(); // ABRIR CONEXIÓN
+    $consulta = $db -> query("SELECT * FROM familia",PDO::FETCH_OBJ);
+
+    //tabla con datos
+    echo "<table border><tr>   
+            <th>CÓDIGO</th>
+            <th>NOMBRE</th>
+            <th>OPERACIONES</th> 
+        </tr>";
+    while($row = $consulta -> fetch()){
+        echo "<tr><td>".$row -> cod."</td>";
+        echo "<td>".$row -> nombre."</td>";
+        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true'>Eliminar</a></td></tr>";
+    }
+    echo "</table>";
+
+    // cerrar la conexión e instancias
+    $consulta = null;
+    $row = null;
+    $db = null;
+}
+
+/* Función que muestra los datos de la base de datos en la tabla tienda */
+function showDatosTiendas(){
+    $db = connection(); // ABRIR CONEXIÓN
+    $consulta = $db -> query("SELECT * FROM tienda",PDO::FETCH_OBJ);
+
+    //tabla con datos
+    echo "<table border><tr>   
+            <th>CÓDIGO</th>
+            <th>NOMBRE</th>
+            <th>TELÉFONO</th>
+            <th>OPERACIONES</th> 
+        </tr>";
+    while($row = $consulta -> fetch()){
+        echo "<tr><td>".$row -> cod."</td>";
+        echo "<td>".$row -> nombre."</td>";
+        echo "<td>".$row -> tlf."</td>";
         echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true'>Eliminar</a></td></tr>";
     }
     echo "</table>";

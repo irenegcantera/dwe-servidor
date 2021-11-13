@@ -1,10 +1,10 @@
 <?php
 require_once '../conf/config.inc';
 include '../parts/menu.php';
-include '../parts/formMain.php'; // ya incluye las funciones
+include '../parts/formFamilia.php'; // ya incluye las funciones
 
     //comprobar si se ha rellenado los datos del formulario
-    if(isset($_REQUEST['submit'])){
+    if(isset($_REQUEST['submit']) || isset($_REQUEST['guardar'])){
         if(isset($_REQUEST['cod'])){ // requerido
             $cod = $_REQUEST['cod'];
         }
@@ -13,6 +13,11 @@ include '../parts/formMain.php'; // ya incluye las funciones
             $nombre = $_REQUEST['nombre'];
         }
 
-        addFamilia($cod,$nombre);
+        if (isset($_REQUEST['submit'])){
+            addFamilia($cod,$nombre);
+        }else if (isset($_REQUEST['guardar'])){
+            updateFamilia($cod,$nombre);
+        }
+        
     }
 ?>

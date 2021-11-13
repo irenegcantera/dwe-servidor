@@ -1,10 +1,12 @@
 <?php
 require_once '../conf/config.inc';
 include '../parts/menu.php';
-include '../parts/formMain.php'; // ya incluye las funciones
+include '../parts/formTienda.php'; // ya incluye las funciones
 
     //comprobar si se ha rellenado los datos del formulario
-    if(isset($_REQUEST['submit'])){
+    if(isset($_REQUEST['submit']) || isset($_REQUEST['guardar'])){
+        $cod = $_REQUEST['cod'];
+
         if(isset($_REQUEST['nombre'])){ // requerido
             $nombre = $_REQUEST['nombre'];
         }
@@ -15,6 +17,6 @@ include '../parts/formMain.php'; // ya incluye las funciones
             $telefono = NULL;
         }
 
-        addTienda($nombre,$telefono);
+        updateTienda($cod,$nombre,$telefono);
     }
 ?>

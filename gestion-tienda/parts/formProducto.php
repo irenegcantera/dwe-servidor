@@ -1,4 +1,10 @@
+<br><br><br>
+<link rel = "stylesheet" type = "text/css" href = <?=PATH."css/form.css"?>>
+<form name="formulario" action="crear.php" method="POST" enctype="multipart/form-data">  
+
 <?php
+require '../functions.php';
+
 if (obtainDirectory() == "productos"){
     if(isset($_REQUEST['editar']) && $_REQUEST['editar'] == true){
         $cod = $_REQUEST['cod'];
@@ -19,32 +25,30 @@ if (obtainDirectory() == "productos"){
         $row = null;
         $db = null;
 
-        echo "<fieldset>
-            <legend>Código</legend>
-            <input name='cod' type= 'text' value='$cod' required>
-        </fieldset>
-        <fieldset>
-            <legend>Nombre</legend>
-            <input name='nombre' type= 'text' value='$nombre'>
-        </fieldset>
-        <fieldset>
-            <legend>Nombre corto</legend>
-            <input name='ncorto' type= 'text' value='$ncorto' required>
-        </fieldset>
-        <fieldset>
-            <legend>Descripción</legend>
-            <textarea name='desc' rows='4' cols='50' value='$desc'></textarea>
-        </fieldset>
-        <fieldset>
-            <legend>Foto</legend>
-            <input name='foto' type= 'file' value='$foto'>
-        </fieldset>
-        <fieldset>
-            <legend>PVP</legend>
-            <input name='pvp' type= 'text' value='$pvp' required>
-        </fieldset>
-        <fieldset>
-            <legend>Familia</legend>";
+        echo "<h2>PRODUCTO <i>'$cod'</i> A EDITAR</h2><br>
+            <p>Introduce los datos que se vayan a modificar:</p>
+            <fieldset>
+                <legend>Nombre</legend>
+                <input name='nombre' type= 'text' value='$nombre'>
+            </fieldset>
+            <fieldset>
+                <legend>Nombre corto</legend>
+                <input name='ncorto' type= 'text' value='$ncorto' required>
+            </fieldset>
+            <fieldset>
+                <legend>Descripción</legend>
+                <textarea name='desc' rows='15' cols='100' value=''>$desc</textarea>
+            </fieldset>
+            <fieldset>
+                <legend>Foto</legend>
+                <input name='foto' type= 'file' value='$foto'>
+            </fieldset>
+            <fieldset>
+                <legend>PVP</legend>
+                <input name='pvp' type= 'text' value='$pvp' required>
+            </fieldset>
+            <fieldset>
+                <legend>Familia</legend>";
 
         $db = connection(); // abrir conexión
         if($db != null){
@@ -60,33 +64,35 @@ if (obtainDirectory() == "productos"){
         $consulta = null;
         $row = null;
         $db = null;
+        echo "<br><input name='guardar' type='submit' value='Guardar cambios'>";
     }else{
-        echo "<fieldset>
-            <legend>Código</legend>
-            <input name='cod' type= 'text' value='' required>
-        </fieldset>
-        <fieldset>
-            <legend>Nombre</legend>
-            <input name='nombre' type= 'text' value=''>
-        </fieldset>
-        <fieldset>
-            <legend>Nombre corto</legend>
-            <input name='ncorto' type= 'text' value='' required>
-        </fieldset>
-        <fieldset>
-            <legend>Descripción</legend>
-            <textarea name='desc' rows='4' cols='50' value=''></textarea>
-        </fieldset>
-        <fieldset>
-            <legend>Foto</legend>
-            <input name='foto' type= 'file' value=''>
-        </fieldset>
-        <fieldset>
-            <legend>PVP</legend>
-            <input name='pvp' type= 'text' value='' required>
-        </fieldset>
-        <fieldset>
-            <legend>Familia</legend>";
+        echo "<p>Introduce los siguientes datos:</p>
+            <fieldset>
+                <legend>Código</legend>
+                <input name='cod' type= 'text' value='' required>
+            </fieldset>
+            <fieldset>
+                <legend>Nombre</legend>
+                <input name='nombre' type= 'text' value=''>
+            </fieldset>
+            <fieldset>
+                <legend>Nombre corto</legend>
+                <input name='ncorto' type= 'text' value='' required>
+            </fieldset>
+            <fieldset>
+                <legend>Descripción</legend>
+                <textarea name='desc' rows='15' cols='100' value=''></textarea>
+            </fieldset>
+            <fieldset>
+                <legend>Foto</legend>
+                <input name='foto' type= 'file' value=''>
+            </fieldset>
+            <fieldset>
+                <legend>PVP</legend>
+                <input name='pvp' type= 'text' value='' required>
+            </fieldset>
+            <fieldset>
+                <legend>Familia</legend>";
         
         $db = connection();
         if($db != null){
@@ -101,6 +107,8 @@ if (obtainDirectory() == "productos"){
         $consulta = null;
         $row = null;
         $db = null;
+
+        echo "<br><input name='submit' type='submit' value='Crear contacto'>";
     }
 }
 ?>

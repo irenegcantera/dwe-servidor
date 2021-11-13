@@ -69,6 +69,24 @@ function addFamilia($cod,$nombre){ // FUNCIONA
     $db = null;
 }
 
+/* Función que añade familias de productos a la base de datos */
+function addTienda($nombre,$tlf){ // FUNCIONA
+    //ABRIR CONEXIÓN
+    $db = connection();
+
+    if ($tlf == NULL){
+        $consulta = "INSERT INTO tienda(nombre) VALUES('".$nombre."')";
+    }else{
+        $consulta = "INSERT INTO tienda(nombre,tlf) VALUES('".$nombre."','".$tlf."')";
+    }
+
+    $registro = $db -> exec($consulta);
+    // cerrar conexión e instancias
+    $registro = null;
+    $consulta = null;
+    $db = null;
+}
+
 /* Función que obtiene el directorio en el que se ejecuta crear.php */
 function obtainDirectory(){
     $dirArray = explode("/", $_SERVER['PHP_SELF']);

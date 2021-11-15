@@ -7,6 +7,13 @@
 
 
     // mostrar tabla, ultima columna editar y eliminar, te llevará a crear.php
-    showDatosFamilias();
+    if (isset($_REQUEST['eliminar']) && $_REQUEST['eliminar'] == true) {
+        if(isset($_REQUEST['cod'])){
+            deleteFamilia($_REQUEST['cod']);
+            showDatosFamilias();
+        }
+    }else{
+        showDatosFamilias();
+    }   
 ?>
 

@@ -7,6 +7,13 @@
 
 
     // mostrar tabla, ultima columna editar y eliminas, te llevará a crear.php
-    showDatosProductos();
+    if (isset($_REQUEST['eliminar']) && $_REQUEST['eliminar'] == true) {
+        if(isset($_REQUEST['cod'])){
+            deleteProducto($_REQUEST['cod']);
+            showDatosProductos();
+        }
+    }else{
+        showDatosProductos();
+    }   
 ?>
 

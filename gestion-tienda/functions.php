@@ -157,6 +157,36 @@ function updateTienda($cod,$nombre,$tlf){
     $db = null;
 }
 
+/* Función que borra un producto */
+function deleteProducto($cod){
+    // abrir conexión
+    $db = connection();
+    $registros =  $db -> exec("DELETE FROM producto WHERE cod='".$cod."'");
+    // cerrar conexión e instancias
+    $registro = null;
+    $db = null;
+}
+
+/* Función que borra una familia de un producto */
+function deleteFamilia($cod){
+    // abrir conexión
+    $db = connection();
+    $registros =  $db -> exec("DELETE FROM familia WHERE cod='".$cod."'");
+    // cerrar conexión e instancias
+    $registro = null;
+    $db = null;
+}
+
+/* Función que borra una tienda */
+function deleteTienda($cod){
+    // abrir conexión
+    $db = connection();
+    $registros =  $db -> exec("DELETE FROM tienda WHERE cod='".$cod."'");
+    // cerrar conexión e instancias
+    $registro = null;
+    $db = null;
+}
+
 /* Función que muestra los datos de la base de datos en la tabla producto */
 function showDatosProductos(){
     $db = connection(); // ABRIR CONEXIÓN
@@ -181,7 +211,7 @@ function showDatosProductos(){
         echo "<td>".$row -> foto."</td>";
         echo "<td>".$row -> PVP."</td>";
         echo "<td>".$row -> familia."</td>";
-        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true'>Eliminar</a></td></tr>";
+        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true&cod=".$row -> cod."'>Eliminar</a></td></tr>";
     }
     echo "</table>";
 
@@ -205,7 +235,7 @@ function showDatosFamilias(){
     while($row = $consulta -> fetch()){
         echo "<tr><td>".$row -> cod."</td>";
         echo "<td>".$row -> nombre."</td>";
-        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true'>Eliminar</a></td></tr>";
+        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true&cod=".$row -> cod."'>Eliminar</a></td></tr>";
     }
     echo "</table>";
 
@@ -231,7 +261,7 @@ function showDatosTiendas(){
         echo "<tr><td>".$row -> cod."</td>";
         echo "<td>".$row -> nombre."</td>";
         echo "<td>".$row -> tlf."</td>";
-        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true'>Eliminar</a></td></tr>";
+        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true&cod=".$row -> cod."'>Eliminar</a></td></tr>";
     }
     echo "</table>";
 

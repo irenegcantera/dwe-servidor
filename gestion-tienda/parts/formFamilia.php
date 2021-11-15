@@ -1,5 +1,4 @@
 <br><br><br>
-<link rel = "stylesheet" type = "text/css" href = <?=PATH."css/form.css"?>>
 <form name="formulario" action="" method="POST" enctype="multipart/form-data">  
 
 <?php

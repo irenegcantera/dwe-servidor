@@ -271,6 +271,41 @@ function showDatosTiendas(){
     $db = null;
 }
 
+/* Función que muestra los datos de la búsqueda de un producto */
+function searchProductos(){
+    $db = connection(); // ABRIR CONEXIÓN
+    $registro = $db -> query("SELECT * FROM producto WHERE nombre_corto LIKE '%".$_REQUEST['nombre']."%'",PDO::FETCH_OBJ);
+
+    //tabla con datos
+    echo "<table border><tr>   
+            <th>CÓDIGO</th>
+            <th>NOMBRE</th>
+            <th>NOMBRE CORTO</th>
+            <th>DESCRIPCIÓN</th>
+            <th>FOTO</th>
+            <th>PVP</th>
+            <th>FAMILIA</th> 
+            <th>OPERACIONES</th> 
+        </tr>";
+    while($row = $registro -> fetch()){
+        echo "<tr><td>".$row -> cod."</td>";
+        echo "<td>".$row -> nombre."</td>";
+        echo "<td>".$row -> nombre_corto."</td>";
+        echo "<td>".$row -> descripcion."</td>";
+        echo "<td>".$row -> foto."</td>";
+        echo "<td>".$row -> PVP."</td>";
+        echo "<td>".$row -> familia."</td>";
+        echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true&cod=".$row -> cod."'>Eliminar</a></td></tr>";
+    }
+    echo "</table>";
+
+    // cerrar la conexión e instancias
+    $consulta = null;
+    $row = null;
+    $db = null;
+}
+
+
 /* Función que obtiene el directorio en el que se ejecuta crear.php */
 function obtainDirectory(){
     $dirArray = explode("/", $_SERVER['PHP_SELF']);

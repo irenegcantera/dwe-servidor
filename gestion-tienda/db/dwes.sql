@@ -8,8 +8,9 @@ CREATE TABLE  dwes.familia ( cod VARCHAR( 6 ) NOT NULL , nombre VARCHAR( 200 ) N
  
 CREATE TABLE  dwes.stock ( producto VARCHAR( 12 ) NOT NULL , tienda INT NOT NULL , unidades INT NOT NULL , PRIMARY KEY (  producto ,  tienda ) ) ENGINE = INNODB; 
  
--- Creamos las claves foráneas ALTER TABLE producto ADD CONSTRAINT producto_ibfk_1 FOREIGN KEY (familia) REFERENCES familia (cod) ON UPDATE CASCADE; 
-ALTER TABLE stock ADD CONSTRAINT stock_ibfk_2  FOREIGN KEY (tienda) REFERENCES tienda (cod) ON UPDATE CASCADE, ADD CONSTRAINT stock_ibfk_1  FOREIGN KEY (producto) REFERENCES producto (cod) ON UPDATE CASCADE; 
+-- Creamos las claves foráneas 
+ALTER TABLE producto ADD CONSTRAINT producto_ibfk_1 FOREIGN KEY (familia) REFERENCES familia (cod) ON UPDATE CASCADE ON DELETE CASCADE; 
+ALTER TABLE stock ADD CONSTRAINT stock_ibfk_2  FOREIGN KEY (tienda) REFERENCES tienda (cod) ON UPDATE CASCADE, ADD CONSTRAINT stock_ibfk_1  FOREIGN KEY (producto) REFERENCES producto (cod) ON UPDATE CASCADE ON DELETE CASCADE; 
  
 CREATE USER dwes IDENTIFIED BY 'abc123.'; 
  

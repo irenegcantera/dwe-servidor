@@ -26,7 +26,8 @@ if(obtainDirectory() == "familias"){
                 <legend>Nombre</legend>
                 <input name='nombre' type= 'text' value='$nombre' required>
             </fieldset>
-            <br><input name='guardar' type='submit' value='Guardar cambios'>";
+            <br><input name='guardar' type='submit' value='Guardar cambios'>
+            <br><br><a href = 'listar.php'>Volver a Listar</a>";
     }else{
         echo "<p>Introduce los siguientes datos:</p>
             <fieldset>

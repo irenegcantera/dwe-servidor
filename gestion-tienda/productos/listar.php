@@ -4,16 +4,21 @@
     include '../parts/menu.php';
 
     // MOSTRAR FOMRULARIO PARA LA BÚQUEDA DE PRODUCTOS
+    include '../parts/formSearch.php';
 
-
-    // mostrar tabla, ultima columna editar y eliminas, te llevará a crear.php
-    if (isset($_REQUEST['eliminar']) && $_REQUEST['eliminar'] == true) {
-        if(isset($_REQUEST['cod'])){
-            deleteProducto($_REQUEST['cod']);
-            showDatosProductos();
-        }
+    if(isset($_REQUEST['buscar']) && isset($_REQUEST['nombre'])){
+            searchProductos($_REQUEST['nombre']);
+            if(isset($_REQUEST['borrar'])){
+                showDatosProductos();
+            }
     }else{
-        showDatosProductos();
-    }   
+        if (isset($_REQUEST['eliminar']) && $_REQUEST['eliminar'] == true) {
+            if(isset($_REQUEST['cod'])){
+                deleteProducto($_REQUEST['cod']);
+                showDatosProductos();
+            }
+        }else{
+            showDatosProductos();
+        }   
+    }
 ?>
-

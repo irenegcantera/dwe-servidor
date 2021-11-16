@@ -25,15 +25,12 @@ include '../parts/formProducto.php'; // ya incluye las funciones
             $desc = NULL;
         }
 
-        if(isset($_REQUEST['foto'])){
-            // mover foto a la carpeta img de productos
-            // obtener la extensión de la foto
-            // cambiar el nombre a primarykey.extension
+        if(isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK){
+            $foto = moveRenameImg($cod,$_FILES['foto']);
         }else{
-            $foto = NULL;
+            $foto = null;
         }
         
-
         if(isset($_REQUEST['pvp'])){ // requerido
             $pvp = (float)$_REQUEST['pvp'];
         }

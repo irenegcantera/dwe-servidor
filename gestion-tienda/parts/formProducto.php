@@ -1,4 +1,3 @@
-<br><br><br>
 <form name="formulario" action="crear.php" method="POST" enctype="multipart/form-data">  
 
 <?php

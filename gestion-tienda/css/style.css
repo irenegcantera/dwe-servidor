@@ -26,6 +26,10 @@ ul, ol {
     list-style:none;
 }
 
+div {
+    text-align: center;
+}
+
 .nav {
     width:500px; /*Le establecemos un ancho*/
     margin:0 auto; /*Centramos automaticamente*/

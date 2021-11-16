@@ -12,7 +12,7 @@
 						<ul>
 							<li><a href=<?=PATH."productos/crear.php"?>>Crear</a></li>
 							<li><a href=<?=PATH."productos/listar.php"?>>Listar</a></li>
-                            <li><a href="">Stock</a></li>
+                            <li><a href=<?=PATH."productos/stock.php"?>>Stock</a></li>
 						</ul>
 					</li>
 					<li><a href=<?=PATH."familias/familia.php"?>>Familias</a>
@@ -26,10 +26,10 @@
 						<ul>
 							<li><a href=<?=PATH."tiendas/crear.php"?>>Crear</a></li>
 							<li><a href=<?=PATH."tiendas/listar.php"?>>Listar</a></li>
-                            <li><a href="">Stock</a></li>
+                            <li><a href=<?=PATH."tiendas/stock.php"?>>Stock</a></li>
 						</ul>
 					</li>                                        
-					<li><a href="">Acerca de</a>
+					<li><a href=<?=PATH."acercade.php"?>>Acerca de</a>
 					</li>
 
 				</ul>

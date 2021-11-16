@@ -25,7 +25,14 @@ include '../parts/formProducto.php'; // ya incluye las funciones
             $desc = NULL;
         }
 
-        $foto = NULL;
+        if(isset($_REQUEST['foto'])){
+            // mover foto a la carpeta img de productos
+            // obtener la extensión de la foto
+            // cambiar el nombre a primarykey.extension
+        }else{
+            $foto = NULL;
+        }
+        
 
         if(isset($_REQUEST['pvp'])){ // requerido
             $pvp = (float)$_REQUEST['pvp'];

@@ -3,11 +3,17 @@ require 'functionsCRUD.php';
 
 // ARCHIVO PHP CON FUNCIONES DE LA APLICACIÓN
 // Añadir fotos a los productos
-
-
-
-
-
+// mover foto a la carpeta img de productos
+// obtener la extensión de la foto
+// cambiar el nombre a primarykey.extension
+function moveRenameImg($cod,$foto){
+    $temporal = $foto['tmp_name'];
+    $partes = explode(".", $foto['name']);
+    $extension = strtolower(end($partes));
+    $rutaFoto = "./productos/img/".$cod.".".$extension;
+    move_uploaded_file($temporal,$rutaFoto);
+    return $cod.".".$extension;
+}
 
 /* Función que muestra los datos de la base de datos en la tabla producto */
 function showDatosProductos(){
@@ -98,7 +104,7 @@ function showStockTiendas(){
     $db = connection(); // abrir   
     $tiendas = $db -> query("SELECT tienda.nombre,stock.tienda FROM tienda INNER JOIN stock ON tienda.cod = stock.tienda GROUP BY tienda.nombre"); 
 
-    echo "<div style ='display: flex; flex-direction: row; justify-content: space-evenly;'>";
+    echo "<br><div style ='display: flex; flex-direction: row; justify-content: space-evenly;'>";
     foreach($tiendas as $tienda){
         $registro = $db -> query("SELECT * FROM stock WHERE tienda ='".$tienda[1]."'",PDO::FETCH_OBJ); // en la posición 1 está el código
         // tabla con el showStock
@@ -124,15 +130,17 @@ function showStockTiendas(){
 /* Función que muestra la cantidad de productos que hay en el stock */
 function showStockProductos(){
     $db = connection(); // ABRIR 
-    $registro = $db -> query("SELECT producto, SUM(unidades) AS suma FROM stock GROUP BY producto", PDO::FETCH_OBJ);
+    $registro = $db -> query("SELECT stock.producto, producto.nombre_corto, SUM(stock.unidades) AS suma FROM stock INNER JOIN producto ON stock.producto = producto.cod GROUP BY producto", PDO::FETCH_OBJ);
     // tabla
     echo "<div><h3>Stock de los productos</h3>";
     echo "<table border><tr>   
         <th>PRODUCTO</th>
+        <th>NOMBRE</th>
         <th>UNIDADES</th>
     </tr>";
     while($row = $registro -> fetch()){
         echo "<tr><td>".$row -> producto."</td>";
+        echo "<td>".$row -> nombre_corto."</td>";
         echo "<td>".$row -> suma."</td></tr>";
     }
     echo "</table></div>";

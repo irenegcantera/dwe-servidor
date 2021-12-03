@@ -1,41 +1,54 @@
 <?php
-if(isset($_REQUEST['datosn']) && isset($_REQUEST['datost'])){
-    $nombreArray = explode(";", $_REQUEST['datosn']);
-    $telfArray = explode(";", $_REQUEST['datost']);
-    // el nombre se pasa a minúsculas y la primera letra de cada palabra a mayúsculas
-    $nombre = ucwords(strtolower($_REQUEST['nombre']));
-    $telefono = $_REQUEST['telefono'];
-    if($nombre == null){
-        echo "<h4>NO SE HA INTRODUCIDO EL NOMBRE</h4>";
-    }else{
-        // si el nombre introducido existe en el array 
-        if(in_array($nombre, $nombreArray)){
-            $indice = array_search($nombre, $nombreArray); // obtener la posición del nombre en el array
-            // si el télefono no está vacío y tiene una longitud de 9
-            if(($telefono != null) && (strlen($telefono) == 9)){ 
-                $telfArray[$indice] = $telefono; // modificar el teléfono
-            }else{
-                echo "<h4>NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE</h4>";
-                echo "Se va a eliminar el contacto";
-                // si está vacío eliminar el registro de cada array
-                unset($nombreArray[$indice]);
-                unset($telfArray[$indice]);
-            }
+$error = "";
+
+//if(isset($_REQUEST['enviar'])){
+    if(isset($_REQUEST['nombres']) && isset($_REQUEST['telefonos'])){
+        $nombreArray = explode(";", $_REQUEST['nombres']);
+        $telfArray = explode(";", $_REQUEST['telefonos']);
+
+        // el nombre se pasa a minúsculas (strtolower) y la primera letra de cada palabra a mayúsculas (ucwords)
+        $nombre = ucwords(strtolower($_REQUEST['nombre']));
+        $telefono = $_REQUEST['telefono'];
+
+        if($nombre == null){
+            $error = "NO SE HA INTRODUCIDO EL NOMBRE";
         }else{
-            // si no existe el nombre y se registro un teléfono de longitud 9
-            if(($telefono != null) && (strlen($telefono) == 9)){
-                // se añade los valores de nombre y teléfono a sus respectivos array
-                array_push($nombreArray, $nombre);
-                array_push($telfArray, $telefono);
+            if(in_array($nombre, $nombreArray)){ // si el nombre introducido existe en el array 
+                $indice = array_search($nombre, $nombreArray); // obtener la posición del nombre en el array
+                
+                // si el télefono no está vacío y tiene una longitud de 9
+                if(($telefono != null) && (strlen($telefono) == 9)){ 
+                    $telfArray[$indice] = $telefono; // modificar el teléfono
+                }else{
+                    $error = "NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE.<br>";
+                    $error .= "Eliminando el contacto...";
+
+                    // si está vacío eliminar el registro de cada array
+                    unset($nombreArray[$indice]);
+                    unset($telfArray[$indice]);
+                }
             }else{
-                echo "<h4>NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE</h4>";
+                // si no existe el nombre y se registro un teléfono de longitud 9
+                if(($telefono != null) && (strlen($telefono) == 9)){
+                    if(in_array($telefono,$telfArray)){
+                        $error = "El teléfono ya existe en la agenda.";
+                    }else{
+                        // se añade los valores de nombre y teléfono a sus respectivos array
+                        array_push($nombreArray, $nombre);
+                        array_push($telfArray, $telefono);
+                    }
+                }else{
+                    $error = "NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE";
+                }
             }
         }
+    }else{
+        $error = "Los campos son obligatorios.";
+        $nombreArray = array();
+        $telfArray = array();
     }
-}else{
-    $nombreArray = array();
-    $telfArray = array();
-}
+//}
+
 // mostrar la tabla por pantalla
 echo "<h1>Agenda telefónica</h1>";
 echo "<table border>";
@@ -49,9 +62,12 @@ echo "<table>";
 
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario para probar datos</title>
     <!-- Preparamos el entorno gráfico para los datos -->
     <!--<script type="text/javascript"
@@ -84,10 +100,13 @@ echo "<table>";
                     </td>
                 </tr>
             </table>
-            <input name="datosn" type="hidden" value="<?php echo implode(";",$nombreArray) ?>" />
-            <input name="datost" type="hidden" value="<?php echo implode(";",$telfArray) ?>" />
-            <input name="enviar" type="submit" value="Enviar" />
+            <input name="nombres" type="hidden" value="<?php echo implode(";",$nombreArray) ?>">
+            <input name="telefonos" type="hidden" value="<?php echo implode(";",$telfArray) ?>">
+            <input name="enviar" type="submit" value="Enviar">
         </form>
+    </div>
+    <div>
+        <?php echo $error;?>
     </div>
 </body>
 </html>

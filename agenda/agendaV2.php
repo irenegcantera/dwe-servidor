@@ -58,53 +58,7 @@ echo "<table>";
     <!--<script type="text/javascript"
         src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=g6Y1jP29lgmvvnVvPR0pxreIMri2Bbqqo1zRZN35J1iT73UyKwU3BWg1R0uVCRAAMcCriZlf8xyvs0tr3O4Psw"
         charset="UTF-8"></script> -->
-    <style type="text/css">
-        div {
-            padding: 10px 20px;
-        }
-
-        h1 {
-            font-family: sans-serif;
-            font-style: italic;
-            text-transform: capitalize;
-            color: #008000;
-        }
-
-        h4{
-            font-family: sans-serif;
-            text-transform: capitalize;
-            color: red;
-        }
-
-        .bajoDch {
-            float: right;
-            position: absolute;
-            margin-right: 0px;
-            margin-bottom: 0px;
-            bottom: 0px;
-            right: 0px;
-        }
-
-        .altoDch1 {
-            color: #00f;
-            float: right;
-            position: absolute;
-            margin-right: 0px;
-            margin-top: 0px;
-            top: 0px;
-            right: 0px;
-        }
-
-        .altoDch2 {
-            color: #f00;
-            float: right;
-            position: absolute;
-            margin-right: 0px;
-            margin-top: 0px;
-            top: 0px;
-            right: 0px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <!-- Comenzamos poniendo el foco del cursor en la pregunta de nombre -->
 <!-- <body onload='document.forms.formulario.nombre.focus()'> -->

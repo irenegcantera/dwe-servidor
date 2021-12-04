@@ -6,28 +6,45 @@ function crearTablaMes($dia,$mes,$year){
     // Día de la semana en número, si es 0 pasa a ser 7
 	$diaInicio = jddayofweek(cal_to_jd(CAL_GREGORIAN, $mes, 1, $year)); 
     $diaInicio = ($diaInicio == 0) ? 7 : $diaInicio;
+    // 0 domingo
+    // 1 lunes
+    // 2 Martes
+    // 3 miercoles
+    // 4 jueves
+    // 5 viernes
+    // 6 sabado
+    // 7 = 0 domingo
 
     // Número de días que tiene un mes
     $diasMes = cal_days_in_month(CAL_GREGORIAN, $mes, $year);
 
-    // Variables que guarda el mes y año restado o sumado. Si el mes es 12 o 1, se resta o suma, respectivamente.
-    $mesRestado = restarMes($mes);
-    $mesSumado = sumarMes($mes);
-    $yearAhora = $year;
- 
-    // ESTO ESTÁ MAL
-    if($mesRestado == 12){
-        $yearAhora--;
-    }else if($mesSumado == 1){
-        $yearAhora++;
-    }
+    //tomo el nombre del mes que hay que imprimir
+    $nombre_mes = pintarMes($mes);
 
     // Mostramos la tabla por pantalla
     echo "<table>";
         echo "<caption>";
-            echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mesRestado."&dia=".$dia."&year=".$yearAhora."> << </a>";
-            echo "&nbsp;&nbsp;".pintarMesYear($mes,$year)."&nbsp;&nbsp;";
-            echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mesSumado."&dia=".$dia."&year=".$yearAhora."> >> </a>";
+
+        // Calculo el mes y año del mes anterior
+        $mes_anterior = $mes - 1;
+        $year_anterior = $year;
+        if ($mes_anterior == 0){
+            $year_anterior--;
+            $mes_anterior = 12;
+        }
+
+        echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mes_anterior."&dia=".$dia."&year=".$year_anterior."> << </a>";
+        echo "&nbsp;&nbsp;".$nombre_mes." ".$year."&nbsp;&nbsp;";
+
+        // Calculo el mes y año del mes siguiente
+        $mes_siguiente = $mes + 1;
+        $year_siguiente = $year;
+        if ($mes_siguiente == 13){
+            $year_siguiente++;
+            $mes_siguiente = 1;
+        } 
+        
+        echo "<a href =".$_SERVER['PHP_SELF']."?mes=".$mes_siguiente."&dia=".$dia."&year=".$year_siguiente."> >> </a>";
         echo "</caption>";
         echo "<tr>";
             echo "<th>Lunes</th>";
@@ -55,10 +72,16 @@ function crearTablaMes($dia,$mes,$year){
                     $empezado = false;
                 }
                 if($empezado){
-                    echo "<td><a href =".$_SERVER['PHP_SELF']."?mes=".$mes."&dia=".$d."&year=".$year.">".$d++."</a></td>";
+                    // if($d = $dia){
+                    //     echo "<td style='background-color: yellow'><a href =".$_SERVER['PHP_SELF']."?mes=".$mes."&dia=".$d."&year=".$year.">".$d++."</a></td>";
+                    // }else{
+                        echo "<td><a href =".$_SERVER['PHP_SELF']."?mes=".$mes."&dia=".$d."&year=".$year.">".$d++."</a></td>";
+                    // }
+                    
                 }else{
                     echo "<td></td>";
                 }
+                
             }
             echo "</tr>";
         }
@@ -66,9 +89,9 @@ function crearTablaMes($dia,$mes,$year){
 }
 
 /* Función que devuelve el mes actual y año actual */
-function pintarMesYear($mes,$year){
+function pintarMes($mes){
     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-    return $meses[$mes-1]." ".date($year);
+    return $meses[$mes-1];
 }
 
 /* Función que calcula el mes anterior */
@@ -82,7 +105,7 @@ function restarMes($mes){
 
 /* Función que calcula el mes siguiente */
 function sumarMes($mes){
-    if($mes ==12){
+    if($mes == 12){
         return 1;
     }else{
         return $mes + 1;

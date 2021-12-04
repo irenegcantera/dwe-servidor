@@ -15,6 +15,7 @@ function crearTablaMes($dia,$mes,$year){
     $mesSumado = sumarMes($mes);
     $yearAhora = $year;
  
+    // ESTO ESTÁ MAL
     if($mesRestado == 12){
         $yearAhora--;
     }else if($mesSumado == 1){
@@ -94,8 +95,6 @@ function leeArchivo($dia,$mes,$year){
     // Comprobar si existe o no el fichero
     if(file_exists($rutaFichero)){
         return file_get_contents($rutaFichero); 
-    }else{
-        return file_put_contents($rutaFichero,"");
     }
 }
 

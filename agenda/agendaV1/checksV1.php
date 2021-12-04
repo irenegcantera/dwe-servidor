@@ -11,9 +11,7 @@ if(isset($_REQUEST['enviar'])){
         $nombre = ucwords(strtolower($_REQUEST['nombre']));
         $telefono = $_REQUEST['telefono'];
 
-        if($nombre == null){
-            $error = "NO SE HA INTRODUCIDO EL NOMBRE";
-        }else{
+        if($nombre != null){
             if(in_array($nombre, $nombreArray)){ // si el nombre introducido existe en el array 
                 $indice = array_search($nombre, $nombreArray); // obtener la posición del nombre en el array
                 
@@ -42,6 +40,8 @@ if(isset($_REQUEST['enviar'])){
                     $error = "NO SE HA INTRODUCIDO UN TELÉFONO O NO TIENE LA LONGITUD SUFICIENTE";
                 }
             }
+        }else{
+            $error = "Los campos son obligatorios.";
         }
     }else{
         $error = "Los campos son obligatorios.";
@@ -49,7 +49,7 @@ if(isset($_REQUEST['enviar'])){
 }
 
 if (isset($_REQUEST['enviar'])){
-    if(!empty($_REQUEST['nombre']) && !empty($_REQUEST['telefono'])){
+    if(!empty($_REQUEST['nombres']) && !empty($_REQUEST['telefonos'])){
         echo "<table border>
                 <tr>
                     <th>Nombre</th>
@@ -61,6 +61,7 @@ if (isset($_REQUEST['enviar'])){
                 echo "<td>$telfArray[$i]</td></tr>";
             }
         }
+        echo "</table>";
     }
 }
 ?>

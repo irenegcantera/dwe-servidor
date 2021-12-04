@@ -19,7 +19,6 @@
     <?php
         include 'checksV1.php';
     ?>
-    <table>
     <!-- Creamos una capa en la parte inferior derecha para que no estorben las preguntas -->
     <br><br><br>
     <div class="bajoDch">

@@ -2,16 +2,18 @@
     include 'components/navbar.php';
     require 'functions.php';
 
+    $message = "";
     // CREAR CONTACTO
     if(isset($_REQUEST['submitCrear'])){
-        if(isset($_REQUEST['nombre']) && isset($_REQUEST['telefono'])){
+        if(!empty($_REQUEST['nombre']) && !empty($_REQUEST['telefono'])){
             $nombre = ucwords(strtolower($_REQUEST['nombre'])); // primera letra en mayúsculas y el resto en minúscula
             $telf = $_REQUEST['telefono'];
+
             if(isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK){
                 $foto = $_FILES['foto'];
             }else{
                 $foto = null;
-                echo "<p>Error al subir el archivo.</p>";
+                $message = "Error al subir el archivo: '".errorMessage($_FILES['foto']['error'])."'";
             }
 
             $datos = getContactos();
@@ -20,8 +22,9 @@
             if ($foto != null){
                 if (count($datos) == 0){
                     addContactos($nombre,$telf,$foto);
+                    $message = "Nuevo contacto añadido.";
                 }else{
-                    // Recorremos el array y comprobamos que el nombre introducido no está ya en el fichero
+                    // Recorremos el array y comprobamos que el nombre ni el teléfono introducido no está ya en el fichero
                     // Contadores que cuentan las veces que aparece el nombre y el teléfono
                     $numNombres = 0;
                     $numTelefonos = 0;
@@ -38,34 +41,37 @@
                     // Si no ha aparecido el nombre ni el teléfono, añadimos el contacto al fichero
                     if (($numNombres == 0) && ($numTelefonos == 0)) {
                         addContactos($nombre,$telf,$foto);
+                        $message = "Nuevo contacto añadido.";
                     }else{
-                        echo "<p>Error al crear el contacto. Recuerde que el <span>nombre NO</span> debe existir.</p>";
+                        $message = "Error al crear el contacto. Recuerde que el <span>nombre NO</span> debe existir.";
                     }
                 }
-            }else{
-                echo "<p>HAY QUE SUBIR UNA FOTO PARA CREAR UN CONTACTO</p>";
             }
         }else{
-            echo "<p>HAY QUE RELLENAR TODOS LOS CAMPOS</p>";
+            $message = "HAY QUE RELLENAR TODOS LOS CAMPOS";
         }
     }
 
     // EDITAR NOMBRE
     if (isset($_REQUEST['submitEditar'])){
         $nomAnt = $_REQUEST['nomAnt'];
-        $nombre = $_REQUEST['nombre'];
+        $telfAnt = $_REQUEST['telfAnt'];
+        $nombre = ucwords(strtolower($_REQUEST['nombre']));
+        $telefono = $_REQUEST['telefono'];
+
         $datos = getContactos();
+
         foreach($datos as $key => $value){
             foreach($value as $k => $v){
-                if($v == $nomAnt){
-                    $telf = $value[1]; // recupera el teléfono
+                if($v == $telfAnt){
                     $foto = $value[2]; // recupera la ruta de la foto
                 }
             }
         }
-        updateContacto($nomAnt,$nombre,$telf,$foto);
-        //redirección a listar.php sin formato
-        //header("Location: listar.php/");
+
+        updateContacto($nomAnt,$telfAnt,$nombre,$telefono,$foto);
+        //redirección a listar.php 
+        header("Location: listar.php");
     }
 
 ?>
@@ -111,8 +117,9 @@
 <?php
 if(isset($_REQUEST['editar'])){
     echo "<input name='nomAnt' type ='hidden' value=".$_REQUEST['nombre'].">";
+    echo "<input name='telfAnt' type ='hidden' value=".$_REQUEST['telefono'].">";
     echo "<br>";
-    echo "<input name='submitEditar' type='submit' value='Guardar contacto' onclick='location.href('listar.php')'>";
+    echo "<input name='submitEditar' type='submit' value='Guardar contacto'>";
 }else{
     echo "<input name='guardar' type='hidden' value=''/>";
     echo "<br>";
@@ -121,5 +128,10 @@ if(isset($_REQUEST['editar'])){
 ?>
 
 </form>
+<div>
+    <?php echo $message; ?>
+</div>
 
-<?php include 'components/footer.php';?>
+<?php 
+include 'components/footer.php';
+?>

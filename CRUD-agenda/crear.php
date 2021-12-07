@@ -20,7 +20,7 @@
 
             // ES OBLIGATORIO SUBIR UNA FOTO
             if ($foto != null){
-                if (count($datos) == 0){
+                if (count($datos) == 0){ // empty($datos)
                     addContactos($nombre,$telf,$foto);
                     $message = "Nuevo contacto añadido.";
                 }else{

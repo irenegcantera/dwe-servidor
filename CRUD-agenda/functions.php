@@ -7,9 +7,10 @@ function addContactos($nombre,$telf,$foto) {
     $temporal = $foto['tmp_name'];
     $partes = explode(".", $foto['name']);
     $extension= strtolower(end($partes));
-    $rutaFoto = "./files/photos/".$nombre.".".$extension;
-    move_uploaded_file($temporal,$rutaFoto); // ruta anterior, ruta nueva
+    $rutaFoto = RUTA_FOTOS.$nombre.".".$extension;
 
+    move_uploaded_file($temporal,$rutaFoto); // ruta anterior, ruta nueva
+    
     // Si existe se introducirá el nombre y telefono, sino existe se creará y se introducirá
     file_put_contents(FICHERO, $nombre.";".$telf.";".$rutaFoto, FILE_APPEND); // para que no sobreescriba
     file_put_contents(FICHERO, "\n", FILE_APPEND);
@@ -17,14 +18,18 @@ function addContactos($nombre,$telf,$foto) {
 
 /* Función que lee el fichero y recupera la información guardandola en un array */
 function getContactos(){
+    if(!file_exists(RUTA_FOTOS)){
+        mkdir(RUTA_FOTOS, 0777, true);
+    }
+
     if (file_exists(FICHERO)){
         $fichero = file_get_contents(FICHERO);  // obtener todo el contenido
-        $linea_datos = explode("\n",$fichero); // guardar el contenido separado por un salto de línea en un array 
+        $linea_datos = explode("\n",$fichero); // guardar el contenido separado por un salto de línea en un array
         // Eliminar el último índice del array ya que se introduce un espacio en blanco
-        array_pop($linea_datos); 
+        array_pop($linea_datos);
 
         $datos = array(); // nuevo array bidimensional
-        
+
         foreach($linea_datos as $key => $value){
             foreach(explode(';',$value) as $v){
                 $datos[$key][] = $v;
@@ -34,6 +39,7 @@ function getContactos(){
     }else{ // si no existe el fichero se creará
         $fichero = fopen("./files/contactos.txt","w");
         fclose($fichero);
+        return null;
     }
 }
 
@@ -47,18 +53,24 @@ function showContactos($datos){
                 <th>Foto</th>
                 <th>Operaciones</th>
             </tr>";
-    
+
         foreach($datos as $key => $value){
             echo "<tr>";
             foreach($value as $k => $v){
-                if ($k != 2){ 
+                if ($k != 2){
                     echo "<td>$v</td>";
                 }else{ // si la clave es igual a la posición de la imagen, que es 2, se imprimirá
                     echo "<td><img src='$v' style = 'width:25%'></td>";
                 }
             }
+
             // 0 es la posición del nombre y 1 del teléfono
-            echo "<td><a href = crear.php?editar=true&nombre=".$datos[$key][0]."&telefono=".$datos[$key][1].">Editar</a>
+            $url = array(
+                "editar" => true,
+                "nombre" => $datos[$key][0],
+                "telefono" => $datos[$key][1]);
+
+            echo "<td><a href = crear.php?".http_build_query($url,"","&").">Editar</a>
                     <br><br>
                     <a href = listar.php?nombre=".$datos[$key][0].">Eliminar</a></td>"; // mostrar enlaces de Editar y Eliminar
             echo "</tr>";
@@ -79,8 +91,8 @@ function saveContactos($datos){
             }else{
                 file_put_contents(FICHERO, $v, FILE_APPEND); // para que no se sobreescriba
             }
-             
-        }   
+
+        }
         file_put_contents(FICHERO, "\n", FILE_APPEND);
     }
 }
@@ -96,7 +108,7 @@ function deleteContacto($nombre){
                 unlink($ruta); // elimina la foto con el nombre del parámetro
             }
         }
-    }        
+    }
     saveContactos($datos); // guarda los datos
 }
 

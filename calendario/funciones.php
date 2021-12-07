@@ -72,11 +72,11 @@ function crearTablaMes($dia,$mes,$year){
                     $empezado = false;
                 }
                 if($empezado){
-                    // if($d = $dia){
-                    //     echo "<td style='background-color: yellow'><a href =".$_SERVER['PHP_SELF']."?mes=".$mes."&dia=".$d."&year=".$year.">".$d++."</a></td>";
-                    // }else{
+                    if($d == $dia){ // pinta de color amarillo el día seleccionado
+                        echo "<td style='background-color: yellow'><a href =".$_SERVER['PHP_SELF']."?mes=".$mes."&dia=".$d."&year=".$year.">".$d++."</a></td>";
+                    }else{
                         echo "<td><a href =".$_SERVER['PHP_SELF']."?mes=".$mes."&dia=".$d."&year=".$year.">".$d++."</a></td>";
-                    // }
+                    }
                     
                 }else{
                     echo "<td></td>";

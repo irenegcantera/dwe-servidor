@@ -2,6 +2,23 @@
 require 'functionsCRUD.php';
 
 // ARCHIVO PHP CON FUNCIONES DE LA APLICACIÓN
+/* checkuser */
+function checkUser($nombre,$pass){
+    $ok = false;
+    $db = connection();
+    if($db !=null){
+        $consulta = $db -> query("SELECT * FROM usuario WHERE nombre='$nombre' AND password='".md5($pass)."'",PDO::FETCH_OBJ);
+        if($consulta -> rowcount() == 0){
+            $ok = true;
+        }
+        disconnection($db,$consulta);
+    }else{
+        $mensaje="Problemas con la base de datos.";
+        disconnection($db,$consulta);
+        return $ok;
+    }
+}
+
 /* Función que mueve la foto subida a una carpeta específica y con el nombre de la clave primaria 
 y la extensión. */
 function moveRenameImg($cod,$foto){
@@ -216,7 +233,7 @@ function searchTiendas(){
         echo "<td><a href = 'crear.php?editar=true&cod=".$row -> cod."'>Editar</a><br><a href='listar.php?eliminar=true&cod=".$row -> cod."'>Eliminar</a></td></tr>";
     }
     echo "</table>";
-   
+
     // cerrar la conexión e instancias
     disconnection($consulta,$row,$db);
 }

@@ -6,4 +6,5 @@
     define("USER","dwes");
     define("PASSWORD","abc123.");
     define("PATH","http://localhost/DWEServidor/dwe-servidor/gestion-tienda/");
+    define("PATHIMG",$_SERVER['DOCUMENT_ROOT']."/DWEServidor/dwe-servidor/gestion-tienda/productos/img/")
 ?>

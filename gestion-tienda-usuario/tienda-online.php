@@ -1,4 +1,7 @@
 <?php
+// recuperar la sesion
+// comprobar que la sesion esté activa
+// comprueba que el usuario es correcto
 require_once 'conf/config.inc';
 include 'parts/menu.php';
 ?>

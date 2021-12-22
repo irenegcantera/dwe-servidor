@@ -10,3 +10,6 @@ Ejercicios de la asignatura Desarrollo Web en Entorno Servidor del ciclo de grad
 
 - dwe-servidor/agenda: agenda telefónica.
 - dwe-servidor/calendario: calendario de tareas.
+- dwe-servidor/gestion-agenda: mantenimiento de la agenda con ficheros.
+- dwe-servidor/CRUD-agenda-bd: mantenimiento de la agenda con base de datos.
+- dwe-servidor/gestion-tienda: mantenimiento de una tienda online con base de datos.
